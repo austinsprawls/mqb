@@ -8,8 +8,6 @@ var Quote = require('./quote.model'),
   Underwriting = require('../underwriting/underwriting.model'),
   Payment = require('../payment/payment.model');
 var Q = require('q');
-var logger = require('../../utils/logger');
-//var logger = require('../../logs/all-logs.log');
 
 //// Get list of quotes
 exports.index = function(req, res) {
@@ -39,14 +37,19 @@ exports.index = function(req, res) {
 exports.create = function(req, res) {
   //Create new quote, but does not save, to generate mongoose _id
   var quote = new Quote(req.body);
+  var quoteID = req.params.id,
+    populateStr = 'primaryDriver additionalDrivers vehicles rates finalRates underwriting payment transaction policy';
+
+  Quote.populate(quote, populateStr, function (err, populatedQuote) {
+    if (err) return handleError(res, err);
+    quote = populatedQuote;
+  });
 
   createDefaultRelationships(quote).then(function(quoteArr){
     quote = quoteArr[quoteArr.length-1];
-    logger.debug('Saving quoteID: ', quote._id.toString());
     quote.save(function(err, quote) {
       if(err) return handleError(res, err);
 
-      logger.debug('Quote saved.');
       return res.json(201, quote);
       })
   });
@@ -65,7 +68,6 @@ function createDefaultRelationships(quote){
 
   defaultRelationships.forEach(function(relationship){
     var deferred = Q.defer();
-    logger.debug('Creating: ' + relationship.quoteField + ' for quoteID: ' + quoteID);
 
     relationship.model.create({_quoteID: quoteID}, function(err, result){
       if(err) return handleError(res, err);

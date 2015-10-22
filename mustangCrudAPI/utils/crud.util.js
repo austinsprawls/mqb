@@ -2,7 +2,6 @@
 /*Start imported npm modules*/
 var _ = require('lodash');
 /*End imported npm modules*/
-var logger = require('../../utils/logger')
 //TODO better docs
 module.exports = crudUtil();
 
@@ -253,16 +252,11 @@ function crudUtil(){
     //If the model contains an array type field we add the $addToSet option to customUpdateOptions
     //then adds each array to the addToSet option and delete the array from the info
     //If all arrays are currently null, the $addToSet key is deleted
-    logger.debug('crud.util.js: containsArray', containsArray)
-    logger.debug('crud.util.js: arrayKeys', arrayKeys)
     if(containsArray){
       customUpdateOptions['$set'] = {};
       arrayKeys.forEach(function(key){
-        logger.debug('crud.util.js: arrayKeys: key', key)
         if(info[key]){
-          logger.debug('crud.util.js: info[key]', info[key])
           customUpdateOptions['$set'][key] = info[key];
-          logger.debug('crud.util.js: customUpdateOptions["$set"][key]', customUpdateOptions['$set'][key])
           delete info[key];
         }
       });
@@ -270,9 +264,7 @@ function crudUtil(){
     }
 
     //Forms complete update parameters
-    logger.debug('crud.util.js: updateOptions BEFORE MERGE', customUpdateOptions, info)
     var updateOptions = _.merge(customUpdateOptions, info);
-    logger.debug('crud.util.js: updateOptions AFTER MERGE', updateOptions)
     model.findByIdAndUpdate(id, updateOptions, handleUpdate);
     function handleUpdate(err, updateResult){
       if(customCallback) return customCallback(err, updateResult);
@@ -377,7 +369,6 @@ function crudUtil(){
   }
 
   function handleError(res, err) {
-    logger.debug(err)
     return res.send(500, err);
   }
   /*End local functions*/

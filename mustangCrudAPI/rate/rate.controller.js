@@ -5,7 +5,6 @@ var Rate = require( './rate.model' );
 var Quote = require('../quote/quote.model.js');
 var Q = require('q');
 // LOCAL
-var logger = require('../../utils/logger')
 // END LOCAL
 //TODO
 
@@ -43,7 +42,6 @@ exports.create = function(req, res) {
 
 exports.updateEZRates = function(data) {
   var deferred = Q.defer();
-  logger.debug("rate.controller: updateEZRates: data: ", data);
   Rate.create(data, handleRate);
 
   function handleRate(err, rate) {
