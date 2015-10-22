@@ -6,8 +6,7 @@ module.exports = vehicleModule;
 function vehicleModule(){
     /*Start exported variables*/
     var model = require('./vehicle.model'),
-        controller = require('./vehicle.controller')(model),
-        router = require('./vehicle.router')(controller);
+        controller = require('./vehicle.controller')(model);
     /*End exported variables*/
 
     //Exported object

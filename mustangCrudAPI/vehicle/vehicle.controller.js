@@ -23,17 +23,16 @@
      /*End local variables for paymentCtrl*/
 
      /*Start exported functions*/
-     function index(req, res){
+     function index(){
          var indexData = {
              parentModel: Quote,
              parentID: req.params.quoteID,
-             parentKey: 'vehicles',
-             res: res
+             parentKey: 'vehicles'
          };
          crudUtil.index.child(indexData);
      }
 
-     function create(req, res) {
+     function create() {
          req.body._quoteID = req.params.quoteID;
          var createData = {
              childInfo: req.body,
@@ -41,30 +40,27 @@
              parentModel: Quote,
              parentID: req.params.quoteID,
              parentKey: 'vehicles',
-             isArray: true,
-             res: res
+             isArray: true
          };
          crudUtil.create.child(createData);
      }
 
-     function update(req, res) {
+     function update() {
          var updateData = {
              model: model,
              info: req.body,
-             id: req.params.id,
-             res: res,
+             id: req.params.id
          };
          crudUtil.update(updateData);
      }
 
-     function destroy(req, res) {
+     function destroy() {
          var destroyData = {
              childModel: model,
              childID: req.params.id,
              parentModel: Quote,
              parentID: req.params.quoteID,
-             parentKey: 'vehicles',
-             res: res
+             parentKey: 'vehicles'
          };
          crudUtil.destroy.child(destroyData);
      }

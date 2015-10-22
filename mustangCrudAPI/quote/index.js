@@ -7,10 +7,10 @@ var VehicleModule = require('../vehicle/vehicle.index'),
     vehicleCtrl = Vehicle.controller;
 
 var quoteExport = {
-  query: quoteCtrl.index,
-  create: quoteCtrl.create,
-  update: quoteCtrl.index,
-  destroy: quoteCtrl.index
+  //query: quoteCtrl.index,
+  create: quoteCtrl.create
+  //update: quoteCtrl.index,
+  //destroy: quoteCtrl.index
 };
 
 

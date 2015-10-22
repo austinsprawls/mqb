@@ -50,10 +50,10 @@ function crudUtil(){
    */
   function indexChild(indexData){
     /*Start local variables*/
+    var deferred = Q.defer();
     var parentModel = indexData.parentModel,
       parentID = indexData.parentID,
-      parentKey = indexData.parentKey,
-      res = indexData.res;
+      parentKey = indexData.parentKey;
     /*End local variables*/
 
     parentModel.findById(parentID)
@@ -62,10 +62,11 @@ function crudUtil(){
       .exec(handleResult);
 
     function handleResult(err, result){
-      if(err) return handleError(res, err);
-      if(!result) return res.send(404);
-      return res.json(200, result[parentKey]);
+      if(err || !result) return deferred.reject(err || new Error("No result found."));
+      return deferred.resolve(result[parentKey]);
     }
+
+    return deferred.promise;
   }
 
   /**
@@ -85,19 +86,20 @@ function crudUtil(){
    */
   function show(showData){
     /*Start local variables*/
+    var deferred = Q.defer();
     var model = showData.model,
-      id = showData.id,
-      res = showData.res;
+      id = showData.id;
     /*End local variables*/
 
     model.findById(id)
       .exec(handleFind);
 
     function handleFind(err, result){
-      if(err) return handleError(res, err);
-      if(!result) return res.json(404);
-      return res.json(200, result);
+      if(err) return deferred.reject(err || !result);
+      return deferred.resolve(result);
     }
+
+    return deferred.promise;
   }
 
   /**
@@ -122,20 +124,20 @@ function crudUtil(){
    */
   function createChild(createData){
     /*Start local variables*/
+    var deferred = Q.defer();
     var childInfo = createData.childInfo,
       childModel = createData.childModel,
       parentModel = createData.parentModel,
       parentID = createData.parentID,
       parentKey = createData.parentKey,
       isArray = createData.isArray,
-      res = createData.res,
       customCallback = createData.callback;
     /*End local variables*/
 
     childModel.create(childInfo, handleCreation);
 
     function handleCreation(err, creationResult){
-      if(err) return handleError(res, err);
+      if(err) return deferred.reject(err);
       /*Start local variables*/
       var selectStr = parentKey,
         populateStr = parentKey,
@@ -157,7 +159,7 @@ function crudUtil(){
 
       function handleParentUpdate(err, updateResult){
         if(customCallback) return customCallback(err, creationResult, updateResult);
-        if(err) return handleError(res, err);
+        if(err) return deferred.reject(err);
 
         var returnedChild = {};
 
@@ -170,9 +172,10 @@ function crudUtil(){
           returnedChild = updateResult[parentKey];
         }
         console.log(returnedChild);
-        return res.json(201, returnedChild);
+        return deferred.resolve(returnedChild);
       }
     }
+    return deferred.promise;
   }
 
   /**
@@ -194,10 +197,10 @@ function crudUtil(){
    */
   function createParent(createData){
     /*Start local variables*/
+    var deferred = Q.defer();
     var defaultRelationships = createData.defaultRelationships,
       parent = createData.parent,
-      childKey = createData.childKey,
-      res = createData.res;
+      childKey = createData.childKey;
     /*End local variables*/
 
     createDefaultChildRelationships(parent, childKey, defaultRelationships).then(function(parentArr){
@@ -205,10 +208,11 @@ function crudUtil(){
 
       parent.save(handleSave);
       function handleSave(err, savedParent){
-        if(err) return handleError(res, err);
-        return res.json(201, savedParent);
+        if(err) return deferred.reject(err);
+        return deferred.resolve(savedParent);
       }
     });
+    return deferred.promise
   }
 
   /**
@@ -235,10 +239,10 @@ function crudUtil(){
    */
   function update(updateData){
     /*Start local variables*/
+    var deferred = Q.defer();
     var model = updateData.model,
       info = updateData.info,
       id = updateData.id,
-      res = updateData.res,
       customCallback = updateData.callback,
       containsArray = updateData.containsArray,
       arrayKeys = updateData.arrayKeys;
@@ -268,9 +272,10 @@ function crudUtil(){
     model.findByIdAndUpdate(id, updateOptions, handleUpdate);
     function handleUpdate(err, updateResult){
       if(customCallback) return customCallback(err, updateResult);
-      if(err) return handleError(res, err);
-      return res.json(200,updateResult);
+      if(err) return deferred.reject(err);
+      return deferred.resolve(updateResult);
     }
+    return deferred.promise
   }
 
   /**
@@ -296,18 +301,18 @@ function crudUtil(){
    */
   function destroyChild(destroyData){
     /*Start local variables*/
+    var deferred = Q.defer();
     var childModel = destroyData.childModel,
       childID = destroyData.childID,
       parentModel = destroyData.parentModel,
       parentID = destroyData.parentID,
-      parentKey = destroyData.parentKey,
-      res = destroyData.res;
+      parentKey = destroyData.parentKey;
     /*End local variables*/
 
     childModel.findByIdAndRemove(childID, handleRemoval);
 
     function handleRemoval(err){
-      if(err) handleError(res, err);
+      if(err) return deferred.reject(err);
       var pullOptions = {};
       pullOptions[parentKey] = childID;
       var updateOptions = {
@@ -317,11 +322,11 @@ function crudUtil(){
       parentModel.findByIdAndUpdate(parentID, updateOptions, handleUpdate);
 
       function handleUpdate(){
-        if(err) handleError(res, err);
-        return res.send(204);
+        if(err) return deferred.reject(err);
+        return deferred.resolve();
       }
-
     }
+    return deferred.promise
   }
   /*End exported functions*/
 
@@ -351,7 +356,7 @@ function crudUtil(){
       var createOptions = _.zipObject([childKey], [parentID]);
 
       relationshipObj.model.create(createOptions, function(err, result){
-        if(err) return handleError(res, err);
+        if(err) return deferred.reject(err);
         relationshipCases[result.relationship](parent, relationshipObj, result);
         deferred.resolve(parent);
       });
@@ -366,10 +371,6 @@ function crudUtil(){
 
   function setOneToManyRelation(parent, child, result){
     parent[child.name].push(result._id);
-  }
-
-  function handleError(res, err) {
-    return res.send(500, err);
   }
   /*End local functions*/
 
