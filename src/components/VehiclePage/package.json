@@ -1,0 +1,6 @@
+{
+  "name": "VehiclePage",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./VehiclePage.js"
+}
