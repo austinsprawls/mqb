@@ -3,24 +3,21 @@
  */
 import Dispatcher from '../core/Dispatcher';
 import ActionTypes from '../constants/ActionTypes';
-
-//import crudApp
-import mustangCrud from '../../mustangCrudAPI/quote';
-
+import restUtil from '../utils/restUtil.js';
 
 var InitializeActions = {
   initApp: function() {
     //TODO get/create new quote
-    function createQuote() {
-      console.log("creating quote");
-      mustangCrud.quote.createQuote().then((data)=>{
+      console.log("Creating quote");
+      //ajax call for create
+      restUtil.quote.create().then((data)=>{
+        console.log("Quote created: ", data);
         mqb.state = data.state; //Attach state to global namespace TODO: find a better way to do this
         Dispatcher.dispatch({
           actionType: ActionTypes.INITIALIZE,
           initialData: data
         });
       });
-    }
   }
 };
 

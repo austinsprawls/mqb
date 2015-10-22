@@ -266,10 +266,6 @@ var QuickQuoteSchema = new Schema({
         type: String,
         required: true
       },
-      driverStatus: {
-        type: String,
-        required: true
-      },
       //suffix: {
       //  type: String,
       //  //required: true  // TODO: ???????????????????

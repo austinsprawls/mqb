@@ -4,11 +4,20 @@ import 'babel-core/polyfill';
 import path from 'path';
 import express from 'express';
 import React from 'react';
+import mongoose from 'mongoose'
 import ReactDOM from 'react-dom/server';
 import Router from './routes';
 import Html from './components/Html';
+//import api from '../mustangCrudAPI/quote';
 
 const server = global.server = express();
+mongoose.connect('mongodb://localhost/mqb2', {
+  db: {
+    safe: true
+  }
+});
+
+//api.quote.create().then((quote)=> console.log('Created: ', quote));
 
 server.set('port', (process.env.PORT || 5000));
 server.use(express.static(path.join(__dirname, 'public')));
@@ -21,6 +30,9 @@ server.use('/api/content', require('./api/content'));
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
+
+server.use('/api/quotes', require('../mustangCrudAPI/quote'));
+
 server.get('*', async (req, res, next) => {
   try {
     let statusCode = 200;

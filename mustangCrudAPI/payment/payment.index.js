@@ -1,27 +1,27 @@
 'use strict';
 /*Start imported npm modules*/
 /*End imported npm modules*/
-module.exports = vehicleModule;
+module.exports = paymentModule;
 
-function vehicleModule(){
+function paymentModule(){
     /*Start exported variables*/
-    var model = require('./vehicle.model'),
-        controller = require('./vehicle.controller')(model),
-        router = require('./vehicle.router')(controller);
+    var model = require('./payment.model'),
+        controller = require('./payment.controller')(model),
+        router = require('./payment.router')(controller);
     /*End exported variables*/
 
-    //Exported object
+    //Returned object for export
     var exported = {
-        name: 'vehicles',
+        name: 'payment',
         model: model,
         controller: controller,
         router: router,
         isReq: true,
-        relationship: 'many'
+        relationship: 'one'
     };
 
-    /*Start local variables for vehicleModule*/
-    /*End local variables for vehicleModule*/
+    /*Start local variables for paymentModule*/
+    /*End local variables for paymentModule*/
 
     /*Start exported functions*/
     /*End exported functions*/

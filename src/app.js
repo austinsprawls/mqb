@@ -1,12 +1,15 @@
 /*! React Starter Kit | MIT License | http://www.reactstarterkit.com/ */
-
 import 'babel-core/polyfill';
 import ReactDOM from 'react-dom';
 import FastClick from 'fastclick';
 import Router from './routes';
 import Location from './core/Location';
 import { addEventListener, removeEventListener } from './utils/DOMUtils';
-//import InitializeAction from './actions/InitializeAction'
+import InitializeActions from './actions/InitializeActions'
+InitializeActions.initApp();
+
+window.mqb = {}; // initilaizes mqb namespace
+
 
 let cssContainer = document.getElementById('css');
 const appContainer = document.getElementById('app');

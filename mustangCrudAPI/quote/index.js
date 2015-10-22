@@ -1,30 +1,125 @@
 'use strict';
 
-var quoteCtrl = require('./quote.controller');
+var express = require('express'),
+  quoteCtrl = require('./quote.controller'),
+  //primaryDriverCtrl = require('../primaryDriver/primaryDriver.controller')
+  ratesCtrl = require('../rate/rate.controller'),
+  transactionCtrl = require('../transaction/transaction.controller');
 
+var PrimaryDriverModule = require('../primaryDriver/primaryDriver.index'),
+    PrimaryDriver = new PrimaryDriverModule(),
+    primaryDriverCtrl = PrimaryDriver.controller;
 var VehicleModule = require('../vehicle/vehicle.index'),
     Vehicle = new VehicleModule(),
     vehicleCtrl = Vehicle.controller;
+var AdditionalDriverModule = require('../additionalDriver/additionalDriver.index'),
+    AdditionalDriver = new AdditionalDriverModule(),
+    additionalDriverCtrl = AdditionalDriver.controller;
+var underwritingModule = require('../underwriting/underwriting.index'),
+  Underwriting = new underwritingModule(),
+  underwritingCtrl = Underwriting.controller;
+var PaymentModule = require('../payment/payment.index'),
+    Payment = new PaymentModule(),
+    paymentCtrl = Payment.controller;
+var PolicyModule = require('../policy/policy.index'),
+  Policy = new PolicyModule(),
+  PolicyCtrl = Policy.controller;
 
-var quoteExport = {
-  //query: quoteCtrl.index,
-  create: quoteCtrl.create
-  //update: quoteCtrl.index,
-  //destroy: quoteCtrl.index
-};
+var router = express.Router();
+
+router.get('/', quoteCtrl.index);
+router.post('/', quoteCtrl.create);
+router.put('/:id', quoteCtrl.update);
+router.get('/:id', quoteCtrl.show);
+
+router.get('/:id/populated', populatedQuote);
+var Quote = require('./quote.model');
+function populatedQuote(req, res){
+  var quoteID = req.params.id,
+    populateStr = 'primaryDriver additionalDrivers vehicles rates finalRates underwriting payment transaction policy';
+
+  Quote.findById(quoteID)
+    .populate(populateStr)
+    .exec(function(err, quote){
+      res.json(200, quote);
+    });
+}
 
 
-//Vehicles functions
-var vehicleExport = {
-  query: vehicleCtrl.index,
-  create: vehicleCtrl.create,
-  update: vehicleCtrl.update,
-  delete: vehicleCtrl.delete
-};
+router.get('/:quoteID/payments/:id/populated', populatedPayment);
+function populatedPayment(req, res){
+  var quoteID = req.params.quoteID,
+    paymentID = req.params.id,
+    populateStr = 'transactions';
+
+  Payment.model.findById(paymentID)
+    .populate(populateStr)
+    .exec(function(err, payment){
+      res.json(200, payment);
+    });
+}
 
 
-module.exports = {
-  quote: quoteExport,
-  vehicle: vehicleExport
-};
+router.get('/:quoteID/qq_payload/:id', function(req, res){
+  var quoteID = req.params.quoteID;
+  var qq_id = req.params.id;
+  var QuickQuotePayload = require('./meta/quickQuote.model');
+  QuickQuotePayload.findById(qq_id)
+    .exec(function(err, payload){
+      res.json(200, payload)
+    })
+});
+router.get('/:quoteID/fq_payload/:id', function(req, res){
+  var quoteID = req.params.quoteID;
+  var fq_id = req.params.id;
+  var FullQuotePayload = require('./meta/fullQuote.model');
+  FullQuotePayload.findById(fq_id)
+    .exec(function(err, payload){
+      res.json(200, payload)
+    })
+})
 
+//Primary driver routes
+//There is no index function because of the one to one relationship with quote
+//There is also no delete function since there should always be a primary driver
+router.get('/:quoteID/primary_drivers/:id', primaryDriverCtrl.show);
+router.post('/:quoteID/primary_drivers', primaryDriverCtrl.create);
+router.put('/:quoteID/primary_drivers/:id', primaryDriverCtrl.update);
+
+//Additional driver routes
+router.get('/:quoteID/additional_drivers', additionalDriverCtrl.index);
+router.post('/:quoteID/additional_drivers', additionalDriverCtrl.create);
+router.put('/:quoteID/additional_drivers/:id', additionalDriverCtrl.update);
+router.delete('/:quoteID/additional_drivers/:id', additionalDriverCtrl.destroy);
+
+//Vehicles routes
+router.get('/:quoteID/vehicles', vehicleCtrl.index);
+router.post('/:quoteID/vehicles', vehicleCtrl.create);
+router.put('/:quoteID/vehicles/:id', vehicleCtrl.update);
+router.delete('/:quoteID/vehicles/:id', vehicleCtrl.destroy);
+
+//Rate routes
+//There is no index function because of the one to one relationship with quote
+//There is also no delete function since there should always be a primary driver
+router.get('/:quoteID/rates', ratesCtrl.index);
+router.post('/:quoteID/rates', ratesCtrl.create);
+router.put('/:quoteID/rates/:id', ratesCtrl.update);
+
+//Underwriting routes
+//There is no index function because of the one to one relationship with quote
+//There is also no delete function since there should always be underwriting questions
+router.get('/:quoteID/underwritings/:id', underwritingCtrl.show);
+router.post('/:quoteID/underwritings', underwritingCtrl.create);
+router.put('/:quoteID/underwritings/:id', underwritingCtrl.update);
+
+//Payment routes
+//There is no index function because of the one to one relationship with quote
+//There is also no delete function since there should always be a payment
+router.get('/:quoteID/payments/:id', paymentCtrl.show);
+router.post('/:quoteID/payments', paymentCtrl.create);
+router.put('/:quoteID/payments/:id', paymentCtrl.update);
+router.post('/:quoteID/payments/:paymentID/transactions', transactionCtrl.create);
+
+
+
+module.exports = router;
