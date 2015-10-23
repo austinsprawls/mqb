@@ -8,7 +8,7 @@ import { addEventListener, removeEventListener } from './utils/DOMUtils';
 import InitializeActions from './actions/InitializeActions'
 InitializeActions.initApp();
 
-window.mqb = {}; // initilaizes mqb namespace
+//GLOBAL.mqb = {}; // initilaizes mqb namespace
 
 
 let cssContainer = document.getElementById('css');

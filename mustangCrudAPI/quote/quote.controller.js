@@ -40,11 +40,16 @@ exports.create = function(req, res) {
 
   createDefaultRelationships(quote).then(function(quoteArr){
     quote = quoteArr[quoteArr.length-1];
-    quote.save(function(err, quote) {
-      if(err) return handleError(res, err);
+    quote.save(handleSave);
+    function handleSave(err, quote){
+        var populateStr = 'primaryDriver additionalDrivers vehicles rates finalRates underwriting payment transaction policy';
+        if(err) return handleError(res, err);
 
-      return res.json(201, quote);
-      })
+        Quote.populate(quote, populateStr, function (err, quote) {
+          if(err) return handleError(res, err);
+          return res.json(201, quote);
+        })
+    }
   });
 
 };

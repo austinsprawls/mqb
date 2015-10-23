@@ -12,6 +12,7 @@ export default keyMirror({
   UPDATE_ADDITIONAL_DRIVER: null,
   DELETE_ADDITIONAL_DRIVER: null,
   UPDATE_PAYMENT: null,
-  UPDATE_UNDERWRITING: null
+  UPDATE_UNDERWRITING: null,
+  GET_DB_DATA: null
 });
 
