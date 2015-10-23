@@ -8,7 +8,9 @@ import ActionTypes from '../constants/ActionTypes';
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
-var _state= '';
+
+// TODO update this on quote initialization
+var _state= 'TX';
 
 
 var CoreStore = Object.assign({}, EventEmitter.prototype, {

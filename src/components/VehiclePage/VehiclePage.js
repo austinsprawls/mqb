@@ -10,8 +10,11 @@ import VehicleList from '../VehicleList'
 
 @withStyles(styles)
 class VehiclePage extends Component {
-
-  state = { vehicles: VehicleStore.getAllVehicles() };
+  constructor() {
+    super();
+    this.state = { vehicles: VehicleStore.getAllVehicles() };
+    this._onChange = this._onChange.bind(this);
+  }
 
   componentWillMount() {
     VehicleStore.addChangeListener(this._onChange);
@@ -19,13 +22,14 @@ class VehiclePage extends Component {
 
   componentWillUnmount() {
     VehicleStore.removeChangeListener(this._onChange);
-  }
-
-  _onChange() {
-    this.setState({ vehicles: VehicleStore.getAllVehicles() });
   };
 
+
+  _onChange() {    
+    this.setState({ vehicles: VehicleStore.getAllVehicles() });
+  };
   render() {
+
     return (
       <div className="VehiclePage">
         <div className="VehiclePage-container">

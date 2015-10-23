@@ -4,8 +4,15 @@
 
 import React, { PropTypes, Component } from 'react'
 import CoreStore from '../../stores/CoreStore'
-//var vehicleFormPathString = '../States/' + CoreStore.getState() + '/VehicleForm';
-//var VehicleForm = require(vehicleFormPathString);
+// Might have to rethink how this gets required perhaps with an adaptation of the react-proxy-loader
+// Or to directly pull the component from the backend as a slug?
+// http://stackoverflow.com/questions/26518629/dynamically-rendering-a-react-component
+// https://github.com/webpack/react-proxy-loader
+//
+// var vehicleFormPathString = '../States/' + CoreStore.getState() + '/VehicleForm';
+// var VehicleForm = require.include(vehicleFormPathString);
+import VehicleForm from '../States/TX/VehicleForm'
+
 
 class VehicleList extends Component {
 
@@ -15,8 +22,9 @@ class VehicleList extends Component {
 
   render() {
     const vehicleForms = this.props.vehicles.map(vehicle => {
+      // ...vehicle is the spread operator which spreads the keys and values across the jsx element
       return (
-        <VehicleForm vehicle={vehicle} />
+        <VehicleForm {...vehicle} />
       );
     })
 
@@ -30,6 +38,7 @@ class VehicleList extends Component {
      return (
       <div className="VehicleList">
         {vehicleRows}
+        {vehicleForms}
       </div>
     );
   }
