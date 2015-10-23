@@ -3,27 +3,33 @@
  */
 
 import React, { PropTypes, Component } from 'react'
-import VehicleForm from '../States/${mqb.state}/VehicleForm'
+import CoreStore from '../../stores/CoreStore'
+//var vehicleFormPathString = '../States/' + CoreStore.getState() + '/VehicleForm';
+//var VehicleForm = require(vehicleFormPathString);
 
 class VehicleList extends Component {
-
-  getInitialState() {
-    return { vehicles: VehicleStore.getAllVehicles() };
-  };
 
   static propTypes = {
     vehicles: PropTypes.array.isRequired,
   };
 
   render() {
-    var createVehicleForm = function(vehicle) {
+    const vehicleForms = this.props.vehicles.map(vehicle => {
       return (
         <VehicleForm vehicle={vehicle} />
       );
-    };
+    })
+
+    const vehicleRows = this.props.vehicles.map(vehicle => {
+      return (
+        <ul>
+          <li>{vehicle._id}</li>
+        </ul>
+      );
+    });
      return (
       <div className="VehicleList">
-        {this.props.vehicles.map(createVehicleForm,this)}
+        {vehicleRows}
       </div>
     );
   }

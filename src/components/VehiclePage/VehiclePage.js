@@ -6,23 +6,12 @@ import styles from './VehiclePage.css'
 import withStyles from '../../decorators/withStyles'
 import VehicleActions from '../../actions/VehicleActions'
 import VehicleStore from '../../stores/VehicleStore'
+import VehicleList from '../VehicleList'
 
 @withStyles(styles)
 class VehiclePage extends Component {
 
-  getInitialState() {
-   return { vehicles: VehicleStore.getAllVehicles() };
-  };
-
-  static propTypes = {
-    path: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    title: PropTypes.string,
-  };
-
-  static contextTypes = {
-    onSetTitle: PropTypes.func.isRequired,
-  };
+  state = { vehicles: VehicleStore.getAllVehicles() };
 
   componentWillMount() {
     VehicleStore.addChangeListener(this._onChange);
@@ -37,7 +26,6 @@ class VehiclePage extends Component {
   };
 
   render() {
-    this.context.onSetTitle(this.props.title);
     return (
       <div className="VehiclePage">
         <div className="VehiclePage-container">
