@@ -1,0 +1,6 @@
+{
+  "name": "VehicleInfo",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./VehicleInfo.js"
+}
