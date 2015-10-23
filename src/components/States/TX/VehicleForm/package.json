@@ -2,5 +2,5 @@
   "name": "VehicleForm",
   "version": "0.0.0",
   "private": true,
-  "main": "./States/TX/VehicleForm.js"
+  "main": "./VehicleForm.js"
 }

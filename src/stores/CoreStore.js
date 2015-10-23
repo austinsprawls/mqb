@@ -10,6 +10,7 @@ var CHANGE_EVENT = 'change';
 
 
 // TODO update this on quote initialization
+// currently being used to set vehicleForm  TX || FL
 var _state= 'TX';
 
 

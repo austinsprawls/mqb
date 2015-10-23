@@ -19,6 +19,8 @@ class VehicleForm extends Component {
   }
 
   render() {
+    const stateInfo = React.createElement('h1', null, 'Texas Content')
+
     const vehicleInfo = Object.keys(this.props).map((key) => {
       if (this.isObject(this.props[key])){
         return;
@@ -31,7 +33,8 @@ class VehicleForm extends Component {
     })
  
     return (
-    	<div>
+      <div>
+        {stateInfo}
         {vehicleInfo}
       </div>
     );
