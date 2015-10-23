@@ -7,12 +7,13 @@ import withStyles from '../../decorators/withStyles'
 import VehicleActions from '../../actions/VehicleActions'
 import VehicleStore from '../../stores/VehicleStore'
 import VehicleList from '../VehicleList'
+import CoreStore from '../../stores/CoreStore'
 
 @withStyles(styles)
 class VehiclePage extends Component {
   constructor() {
     super();
-    this.state = { vehicles: VehicleStore.getAllVehicles() };
+    this.state = { vehicles: VehicleStore.getAllVehicles(), district: CoreStore.getDistrict() };
     this._onChange = this._onChange.bind(this);
   }
 
@@ -25,8 +26,8 @@ class VehiclePage extends Component {
   };
 
 
-  _onChange() {    
-    this.setState({ vehicles: VehicleStore.getAllVehicles() });
+  _onChange() {
+    this.setState({ vehicles: VehicleStore.getAllVehicles(), district: CoreStore.getDistrict() });
   };
   render() {
 
@@ -36,7 +37,7 @@ class VehiclePage extends Component {
           {
             this.props.path === '/' ? null : <h1>{this.props.title}</h1>
           }
-          <VehicleList vehicles={this.state.vehicles} />
+          <VehicleList vehicles={this.state.vehicles} district={this.state.district} />
           <div dangerouslySetInnerHTML={{__html: this.props.content || ''}} />
         </div>
       </div>

@@ -11,7 +11,7 @@ var CHANGE_EVENT = 'change';
 
 // TODO update this on quote initialization
 // currently being used to set vehicleForm  TX || FL
-var _state= 'TX';
+var _state;
 
 
 var CoreStore = Object.assign({}, EventEmitter.prototype, {
@@ -27,7 +27,7 @@ var CoreStore = Object.assign({}, EventEmitter.prototype, {
     this.emit(CHANGE_EVENT);
   },
 
-  getState: function() {
+  getDistrict: function() {
     return _state;
   }
 
@@ -36,7 +36,7 @@ var CoreStore = Object.assign({}, EventEmitter.prototype, {
 Dispatcher.register(function(action) {
   switch(action.actionType) {
     case ActionTypes.INITIALIZE:
-      _state = action.initialData.state;
+      _state = action.initialData.productState;
       CoreStore.emitChange();
       break;
     default:
