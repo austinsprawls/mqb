@@ -7,39 +7,29 @@ import React, { PropTypes, Component } from 'react'
 // Or to directly pull the component from the backend as a slug?
 // http://stackoverflow.com/questions/26518629/dynamically-rendering-a-react-component
 // https://github.com/webpack/react-proxy-loader
-var components = {
-    'TX': React.createFactory( require('../Districts/TX/VehicleForm') ),
-    'FL': React.createFactory( require('../Districts/FL/VehicleForm/VehicleForm') ),
-};
-
+import DistrictForm from '../../constants/DistrictForms'
 
 
 class VehicleList extends Component {
 
   static propTypes = {
     vehicles: PropTypes.array.isRequired,
-    district: PropTypes.string.isRequired
+    district: PropTypes.string.isRequired,
+    handleChange: PropTypes.func.isRequired
   };
 
   render() {
-    //var VehicleForm = require('../Districts/' + this.props.district + '/VehicleForm');
-    //const vehicleForms = this.props.vehicles.map(vehicle => {
-    //  // ...vehicle is the spread operator which spreads the keys and values across the jsx element
-    //  return (
-    //    <VehicleForm vehicle={vehicle} />
-    //  );
-    //})
-    console.log("hi im' here in the vehicle list", this.props);
-    const vehicleRows = this.props.vehicles.map(vehicle => {
+    //var vehicleFormPath = '../Districts/' + this.props.district + '/VehicleForm';
+    const vehicleForms = this.props.vehicles.map(vehicle => {
+      // ...vehicle is the spread operator which spreads the keys and values across the jsx element
       return (
-        <ul key={vehicle._id}>
-          <li>{vehicle._id}</li>
-        </ul>
+        new DistrictForm[this.props.district]({vehicle: vehicle, handleChange: this.props.handleChange})
       );
     });
+    console.log("hi im' here in the vehicle list", this.props );
      return (
       <div className="VehicleList">
-        {vehicleRows}
+        {vehicleForms}
       </div>
     );
   }

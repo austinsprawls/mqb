@@ -19,11 +19,22 @@ class VehiclePage extends Component {
 
   componentWillMount() {
     VehicleStore.addChangeListener(this._onChange);
+    CoreStore.addChangeListener(this._onChange);
   };
 
   componentWillUnmount() {
     VehicleStore.removeChangeListener(this._onChange);
+    CoreStore.removeChangeListener(this._onChange);
   };
+
+  setVehicleState(id, event) {
+    var field = event.target.name,
+        value = event.target.value;
+    this.state.vehicles.map(vehicle => {
+      if (vehicle._id===id) vehicle[field] = value;
+    });
+    this.setState({vehicles: vehicles});
+  }
 
 
   _onChange() {
@@ -33,11 +44,14 @@ class VehiclePage extends Component {
 
     return (
       <div className="VehiclePage">
-        <div className="VehiclePage-container">
+        <div className="VehiclePage-container container">
           {
             this.props.path === '/' ? null : <h1>{this.props.title}</h1>
           }
-          <VehicleList vehicles={this.state.vehicles} district={this.state.district} />
+          <VehicleList vehicles={this.state.vehicles}
+                       district={this.state.district}
+                       handleChange={this.setVehicleState}
+            />
           <div dangerouslySetInnerHTML={{__html: this.props.content || ''}} />
         </div>
       </div>

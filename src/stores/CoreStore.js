@@ -8,10 +8,7 @@ import ActionTypes from '../constants/ActionTypes';
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
-
-// TODO update this on quote initialization
-// currently being used to set vehicleForm  TX || FL
-var _state;
+var _state = '';
 
 
 var CoreStore = Object.assign({}, EventEmitter.prototype, {

@@ -4,6 +4,8 @@
 import React, { PropTypes, Component } from 'react'
 import styles from './VehicleForm.css'
 import withStyles from '../../../../decorators/withStyles'
+import { Panel, Row, Col } from 'react-bootstrap'
+import VehicleInfo from '../FormParts/VehicleInfo'
 
 class VehicleForm extends Component {
   constructor(){
@@ -12,30 +14,32 @@ class VehicleForm extends Component {
   }
 
   static propTypes = {
+    vehicle: PropTypes.object.isRequired,
+    handleChange: PropTypes.func.isRequired
   };
-  
-  isObject(obj){
-    return typeof obj === 'object' && !Array.isArray(obj) && obj !== null
-  }
 
   render() {
-    const stateInfo = React.createElement('h1', null, 'Texas Content')
+    const stateInfo = React.createElement('h1', null, 'Texas Content');
+    console.log("hi i'm here in the VehicleForm component: ", this.props.vehicle);
 
-    const vehicleInfo = Object.keys(this.props).map((key) => {
-      if (this.isObject(this.props[key])){
-        return;
-      }
-      return (
-          <li>
-            {key} {this.props[key]}
-          </li>
-        );
-    })
- 
     return (
-      <div>
+      <div className="VehicleForm">
         {stateInfo}
-        {vehicleInfo}
+        <form>
+          <Row>
+            <Col md={8} mdOffset={2}>
+              <Panel>
+                <Row>
+                  <Col md={7}>
+                    <VehicleInfo />
+                  </Col>
+                  <Col md={5}>
+                  </Col>
+                </Row>
+              </Panel>
+            </Col>
+          </Row>
+        </form>
       </div>
     );
   }
