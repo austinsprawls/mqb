@@ -8,7 +8,11 @@ import ActionTypes from '../constants/ActionTypes';
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
-var _vehicles = [];
+var _vehicles = [],
+    _vehicleYears = [],
+    _vehicleMakes = [],
+    _vehicleModels = [],
+    _vehicleTrims = [];
 
 
 var VehicleStore = Object.assign({}, EventEmitter.prototype, {
@@ -26,6 +30,18 @@ var VehicleStore = Object.assign({}, EventEmitter.prototype, {
 
   getAllVehicles: function() {
     return _vehicles;
+  },
+
+  getVehicleYears: function() {
+    return _vehicleYears;
+  },
+
+  getVehicleMakes: function() {
+    return _vehicleMakes;
+  },
+
+  getVehicleModels: function() {
+    return _vehicleModels;
   }
 
 });
@@ -34,6 +50,14 @@ Dispatcher.register(function(action) {
   switch(action.actionType) {
     case ActionTypes.INITIALIZE:
       _vehicles = action.initialData.vehicles;
+      VehicleStore.emitChange();
+      break;
+    case ActionTypes.GET_VEHICLE_YEARS:
+      _vehicleYears = action.years;
+      VehicleStore.emitChange();
+      break;
+    case ActionTypes.GET_VEHICLE_MAKES:
+      _vehicleMakes = action.makes;
       VehicleStore.emitChange();
       break;
     case ActionTypes.CREATE_VEHICLE:

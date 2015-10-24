@@ -13,7 +13,11 @@ import CoreStore from '../../stores/CoreStore'
 class VehiclePage extends Component {
   constructor() {
     super();
-    this.state = { vehicles: VehicleStore.getAllVehicles(), district: CoreStore.getDistrict() };
+    this.state = { vehicles: VehicleStore.getAllVehicles(),
+                    district: CoreStore.getDistrict(),
+                    vehicleYears: VehicleStore.getVehicleYears(),
+                    vehicleMakes: VehicleStore.getVehicleMakes(),
+    };
     this._onChange = this._onChange.bind(this);
   }
 
@@ -37,7 +41,11 @@ class VehiclePage extends Component {
   }
 
   _onChange() {
-    this.setState({ vehicles: VehicleStore.getAllVehicles(), district: CoreStore.getDistrict() });
+    this.setState({ vehicles: VehicleStore.getAllVehicles(),
+                    district: CoreStore.getDistrict(),
+                    vehicleYears: VehicleStore.getVehicleYears(),
+                    vehicleMakes: VehicleStore.getVehicleMakes(),
+    });
   };
   render() {
 
@@ -49,6 +57,8 @@ class VehiclePage extends Component {
           }
           <VehicleList vehicles={this.state.vehicles}
                        district={this.state.district}
+                       vehicleYears={this.state.vehicleYears}
+                       vehicleMakes={this.state.vehicleMakes}
                        handleChange={this.setVehicleState}
             />
           <div dangerouslySetInnerHTML={{__html: this.props.content || ''}} />

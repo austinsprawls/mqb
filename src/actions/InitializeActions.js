@@ -17,6 +17,13 @@ var InitializeActions = {
       }, function(err){
         console.log("Promise: ", err);
       });
+  },
+  getVehicleYears: function() {
+    console.log("Getting vehicle years");
+    Dispatcher.dispatch({
+      actionType: ActionTypes.GET_VEHICLE_YEARS,
+      years: ['2016', '2015', '2014', '2013']
+    });
   }
 };
 
