@@ -36,7 +36,6 @@ class VehiclePage extends Component {
     this.setState({vehicles: vehicles});
   }
 
-
   _onChange() {
     this.setState({ vehicles: VehicleStore.getAllVehicles(), district: CoreStore.getDistrict() });
   };

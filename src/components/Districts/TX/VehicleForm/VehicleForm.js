@@ -4,8 +4,9 @@
 import React, { PropTypes, Component } from 'react'
 import styles from './VehicleForm.css'
 import withStyles from '../../../../decorators/withStyles'
-import { Panel, Row, Col } from 'react-bootstrap'
+import {  Row, Col } from 'react-bootstrap'
 import VehicleInfo from '../../shared/VehicleInfo'
+import GarageInfo from '../FormParts/GarageInfo'
 
 class VehicleFormTX extends Component {
   constructor(){
@@ -15,7 +16,7 @@ class VehicleFormTX extends Component {
 
   static propTypes = {
     vehicle: PropTypes.object.isRequired,
-    handleChange: PropTypes.func.isRequired
+    handleChange: PropTypes.func.isRequired,
   };
 
   render() {
@@ -27,16 +28,11 @@ class VehicleFormTX extends Component {
         {stateInfo}
         <form>
           <Row>
-            <Col md={8} mdOffset={2}>
-              <Panel>
-                <Row>
-                  <Col md={7}>
-                    <VehicleInfo />
-                  </Col>
-                  <Col md={5}>
-                  </Col>
-                </Row>
-              </Panel>
+            <Col md={4}>
+              <VehicleInfo />
+            </Col>
+            <Col md={6} mdOffset={2}>
+              <GarageInfo />
             </Col>
           </Row>
         </form>

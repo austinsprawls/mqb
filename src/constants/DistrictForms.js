@@ -7,7 +7,7 @@ import React from 'react';
 
 var DistrictForms = {
   'TX': React.createFactory( require('../components/Districts/TX/VehicleForm') ),
-  //'FL': React.createFactory( require('../components/Districts/FL/VehicleForm/VehicleForm') )
+  'FL': React.createFactory( require('../components/Districts/FL/VehicleForm') )
 };
 
 export default DistrictForms;
