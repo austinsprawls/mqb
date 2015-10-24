@@ -7,10 +7,15 @@ import React, { PropTypes, Component } from 'react'
 // Or to directly pull the component from the backend as a slug?
 // http://stackoverflow.com/questions/26518629/dynamically-rendering-a-react-component
 // https://github.com/webpack/react-proxy-loader
-import DistrictForm from '../../constants/DistrictForms'
+import {Button, Row, Col, Panel} from 'react-bootstrap'
+import DistrictForms from '../../constants/DistrictForms'
+import VehicleActions from '../../actions/VehicleActions'
 
 
 class VehicleList extends Component {
+  constructor() {
+    super();
+  }
 
   static propTypes = {
     vehicles: PropTypes.array.isRequired,
@@ -18,12 +23,32 @@ class VehicleList extends Component {
     handleChange: PropTypes.func.isRequired
   };
 
+  deleteVehicle(event) {};
+
+  addVehicle(event) {
+    console.log("CREATE_VEHICLE action called: ", event);
+    //event.preventDefault();
+    //VehicleActions.createVehicle();
+  };
+
   render() {
-    //var vehicleFormPath = '../Districts/' + this.props.district + '/VehicleForm';
+    const districtForm = DistrictForms[this.props.district];
+    const addVehicleButton = (
+      <Button type="button" bsStyle="warning" onClick={console.log("thanks for clicking")}>Add Another Vehicle</Button>
+    );
     const vehicleForms = this.props.vehicles.map(vehicle => {
-      // ...vehicle is the spread operator which spreads the keys and values across the jsx element
       return (
-        new DistrictForm[this.props.district]({vehicle: vehicle, handleChange: this.props.handleChange})
+        <Row>
+          <Col md={8} mdOffset={2}>
+            <Panel footer={addVehicleButton}>
+              {districtForm({vehicle: vehicle,
+                  key: vehicle._id,
+                  handleChange: this.props.handleChange,
+                }
+              )}
+            </Panel>
+          </Col>
+        </Row>
       );
     });
     console.log("hi im' here in the vehicle list", this.props );

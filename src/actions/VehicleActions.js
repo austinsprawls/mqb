@@ -8,7 +8,7 @@ import ActionTypes from '../constants/ActionTypes'
 //import mustangCrud from '../../mustangCrudAPI/quote'
 
 var VehicleActions = {
-  createVehicle: function(vehicle) {
+  createVehicle: function() {
     mustangCrud.vehicle.create().then(function(newVehicle) {
       Dispatcher.dispatch({
         actionType: ActionTypes.CREATE_VEHICLE,

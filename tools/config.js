@@ -85,7 +85,7 @@ const config = {
       }, {
         test: /\.(eot|ttf|wav|mp3)$/,
         loader: 'file-loader',
-      },
+      }
     ],
   },
 
@@ -95,6 +95,9 @@ const config = {
         onImport: files => files.forEach(this.addDependency),
       }),
       require('postcss-nested')(),
+      require('postcss-url')({
+        copy: 'rebase',
+      }),
       require('postcss-cssnext')({ autoprefixer: AUTOPREFIXER_BROWSERS }),
     ];
   },
