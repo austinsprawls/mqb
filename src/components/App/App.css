@@ -4,6 +4,8 @@
 
 @import '../variables.css';
 
+@import '../Bootstrap/css/bootstrap.css';
+
 /*
  * Base styles
  * ========================================================================== */

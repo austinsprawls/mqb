@@ -5,9 +5,9 @@ import React, { PropTypes, Component } from 'react'
 import styles from './VehicleForm.css'
 import withStyles from '../../../../decorators/withStyles'
 import { Panel, Row, Col } from 'react-bootstrap'
-import VehicleInfo from '../FormParts/VehicleInfo'
+import VehicleInfo from '../../shared/VehicleInfo'
 
-class VehicleForm extends Component {
+class VehicleFormTX extends Component {
   constructor(){
     super();
     console.log("VehicleForm constructor(): this",this)
@@ -45,4 +45,4 @@ class VehicleForm extends Component {
   }
 }
 
-export default VehicleForm;
+export default VehicleFormTX;

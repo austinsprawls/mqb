@@ -20,7 +20,7 @@ class VehicleForm extends Component {
       <div className="VehicleInfo">
         <Row>
           <Col md={6}>
-            <Input type="select" label="Auto Information" placeholder="Select a year">
+            <Input type="select" label="Auto Information" placeholder="Select a year" required>
               <option value={2015}>2015</option>
               <option value={2014}>2014</option>
             </Input>

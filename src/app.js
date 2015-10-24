@@ -6,10 +6,8 @@ import Router from './routes';
 import Location from './core/Location';
 import { addEventListener, removeEventListener } from './utils/DOMUtils';
 import InitializeActions from './actions/InitializeActions'
+
 InitializeActions.initApp();
-
-//GLOBAL.mqb = {}; // initilaizes mqb namespace
-
 
 let cssContainer = document.getElementById('css');
 const appContainer = document.getElementById('app');
