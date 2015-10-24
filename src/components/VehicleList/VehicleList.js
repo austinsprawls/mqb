@@ -15,7 +15,6 @@ import VehicleActions from '../../actions/VehicleActions'
 class VehicleList extends Component {
   constructor() {
     super();
-    this.addVehicle = this.addVehicle.bind(this);
   }
 
   static propTypes = {
@@ -24,18 +23,18 @@ class VehicleList extends Component {
     handleChange: PropTypes.func.isRequired
   };
 
-  addVehicle(event) {
-    event.preventDefault();
-    console.log("CREATE_VEHICLE action called");
-    VehicleActions.createVehicle();
-  };
-
   deleteVehicle(event) {};
+
+  addVehicle(event) {
+    console.log("CREATE_VEHICLE action called: ", event);
+    //event.preventDefault();
+    //VehicleActions.createVehicle();
+  };
 
   render() {
     const districtForm = DistrictForms[this.props.district];
     const addVehicleButton = (
-      <Button bsStyle="warning" onClick={this.addVehicle}>Add Another Vehicle</Button>
+      <Button type="button" bsStyle="warning" onClick={console.log("thanks for clicking")}>Add Another Vehicle</Button>
     );
     const vehicleForms = this.props.vehicles.map(vehicle => {
       return (
