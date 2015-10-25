@@ -6,10 +6,11 @@
 import Dispatcher from '../core/Dispatcher'
 import ActionTypes from '../constants/ActionTypes'
 //import mustangCrud from '../../mustangCrudAPI/quote'
+import restUtil from '../utils/restUtil.js';
 
 var VehicleActions = {
   createVehicle: function() {
-    mustangCrud.vehicle.create().then(function(newVehicle) {
+    restUtil.quote.get('/vehicles').then(function(newVehicle) {
       Dispatcher.dispatch({
         actionType: ActionTypes.CREATE_VEHICLE,
         vehicle: newVehicle

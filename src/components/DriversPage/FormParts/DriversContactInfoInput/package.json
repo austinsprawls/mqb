@@ -1,0 +1,6 @@
+{
+  "name": "DriversContactInfoInput",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./DriversContactInfoInput.js"
+}
