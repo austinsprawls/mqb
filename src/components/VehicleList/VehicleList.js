@@ -21,13 +21,16 @@ class VehicleList extends Component {
     handleChange: PropTypes.func.isRequired,
   };
 
-  deleteVehicle(event) {};
+  deleteVehicle(event, vehicle) {
+    console.log("DELETE_VEHICLE action called: ", event);
+    event.preventDefault();
+    VehicleActions.deleteVehicle(vehicle);
+  };
 
-  addVehicle(event) {
+  addVehicle(event, _quoteID) {
     console.log("CREATE_VEHICLE action called: ", event);
     event.preventDefault();
-    var quoteID = this.props.vehicles[this.props.vehicles.length-1]._quoteID;
-    VehicleActions.createVehicle({_quoteID: quoteID});
+    VehicleActions.createVehicle({_quoteID: _quoteID});
   };
 
   render() {
@@ -35,13 +38,16 @@ class VehicleList extends Component {
     const displayVehicleHeader = (vehicle) => {
       if (vehicle.year && vehicle.make && vehicle.model && vehicle.trim) {
         return (
-          <h3>{vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model}</h3>
+          <div>
+            <h3 className="pull-left">{vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model}</h3>
+            <i className="fa fa-times fa-2x pull-right" onClick={this.deleteVehicle.bind(this, vehicle)}></i>
+          </div>
         );
       }
       return null;
     };
     const addVehicleButton = (
-      <Button type="button" bsStyle="warning" onClick={this.addVehicle}>Add Another Vehicle</Button>
+      <Button type="button" bsStyle="warning" onClick={this.addVehicle.bind(this, vehicle._quoteID)}>Add Another Vehicle</Button>
     );
     const vehicleForms = this.props.vehicles.map((vehicle, index) => {
       return (
