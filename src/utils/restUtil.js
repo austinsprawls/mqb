@@ -5,11 +5,20 @@ const API_URL = "/api/quotes/";
 module.exports = restUtil();
 
 function restUtil(){
-  function handleError(err){
-    console.log('ERROR:', err)
+  function callAPI(options){
+    var cases = {
+
+    }
+    if(options.json){
+
+    } else {
+
+    }
+
   }
 
-  function get(url){
+
+  function show(url){
     var options = {
       url: url,
       method: "GET",
@@ -27,6 +36,76 @@ function restUtil(){
     });
   }
 
+  function create(url, payload){
+    var options = {
+      url: url,
+      method: "POST",
+      headers:{
+        "Accept": "application/json"
+      },
+      json: payload
+    };
+
+    return new Promise((resolve, reject) => {
+      request(options.method, options.url)
+        .send(options.json)
+        .set(options.headers)
+        .end((err, response) => {
+          if (err) reject(err);
+          resolve(response.body)
+        });
+    });
+  }
+
+  function update(url, payload){
+    var options = {
+      url: url,
+      method: "PUT",
+      headers:{
+        "Accept": "application/json"
+      },
+      json: payload
+    };
+
+    return new Promise((resolve, reject) => {
+      request
+        .post(options.url)
+        .send(options.json)
+        .set(options.headers)
+        .end((err, response) => {
+          if (err) reject(err);
+          resolve(response)
+        });
+
+      //request(options.method, options.url)
+      //  .send(options.json)
+      //  .set(options.headers)
+      //  .end((err, response) => {
+      //    if (err) reject(err);
+      //    resolve(response)
+      //  });
+    });
+  }
+
+  function destroy(url){
+    var options = {
+      url: url,
+      method: "DELETE",
+      headers:{
+        "Accept": "application/json"
+      }
+    };
+
+    return new Promise((resolve, reject) => {
+      request(options.method, options.url)
+        .set(options.headers)
+        .end((err, response) => {
+          if (err) reject(err);
+          resolve(response)
+        });
+    });
+  }
+
   function buildURL(url){
     if(url) return API_URL + url;
     return API_URL;
@@ -34,27 +113,29 @@ function restUtil(){
 
   return {
     quote: {
-      create: () => {
-        return new Promise(  (success, error) => {
-            var url = buildURL(),
-              options = {
-              url: url,
-              method: "POST",
-              dataType:"json",
-              success: success,
-              error: error
-            };
-
-            return $.ajax(options);
-            //return get(url)
-          }
-        )
+      create: (quote) => {
+        var url = buildURL('');
+        return create(url, quote);
       },
-      get: (url) => {
-        return get(buildURL(url))
-
+      show: (id) => {
+        var url = buildURL(id);
+        return show(url)
       }
     },
+    vehicle: {
+      create: (vehicle) => {
+        var url = buildURL( vehicle._quoteID + '/vehicles/');
+        return create(url, vehicle)
+      },
+      update: (vehicle) => {
+        var url = buildURL( vehicle._quoteID + '/vehicles/' + vehicle._id);
+        return update(url, vehicle)
+      },
+      destroy: (vehicle) => {
+        var url = buildURL( vehicle._quoteID + '/vehicles/' + vehicle._id);
+        return destroy(url)
+      }
+    }
   };
 
 }

@@ -9,12 +9,14 @@ import ActionTypes from '../constants/ActionTypes'
 import restUtil from '../utils/restUtil.js';
 
 var VehicleActions = {
-  createVehicle: function() {
-    restUtil.quote.get('/vehicles').then(function(newVehicle) {
+  createVehicle: function(vehicle) {
+    restUtil.vehicle.create(vehicle).then(function(newVehicle) {
       Dispatcher.dispatch({
         actionType: ActionTypes.CREATE_VEHICLE,
         vehicle: newVehicle
       });
+    }, (err) => {
+      console.log("Error: ", err);
     });
   },
   updateVehicle: function(updatedVehicle) {
