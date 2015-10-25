@@ -161,7 +161,7 @@ function crudUtil(){
 
         var returnedChild = {};
 
-        if(isArray){
+        if(isArray){ //TODO get this working for more robust saving.
           //Finds child result in parent array to ensure the data saved matches
           returnedChild = updateResult[parentKey].filter(function(value){
             return value._id.toString()==creationResult._id.toString()
@@ -170,7 +170,7 @@ function crudUtil(){
           returnedChild = updateResult[parentKey];
         }
         console.log(returnedChild);
-        return res.json(201, returnedChild);
+        return res.json(201, creationResult);
       }
     }
   }
