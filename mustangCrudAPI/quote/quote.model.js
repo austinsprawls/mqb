@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var QuoteSchema = new Schema({
   //Begin EZInsure required fields
-  productState: {type: String, default: 'TX'},
+  productState: {type: String, default: 'FL'},
   agentId: String, //TODO confirm definition
   dnrReason: String, //TODO confirm definition
   requestType: String, //Tells which action to perform QQ - Quick Quote, FQ - Full Quote, POL - Policy

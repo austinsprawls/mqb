@@ -4,7 +4,7 @@
 import React, { PropTypes, Component } from 'react'
 import styles from './VehicleForm.css'
 import withStyles from '../../../../decorators/withStyles'
-import { Panel, Row, Col } from 'react-bootstrap'
+import { Panel, Row, Col, Input } from 'react-bootstrap'
 import VehicleInfo from '../../shared/VehicleInfo'
 
 class VehicleFormFL extends Component {
@@ -15,7 +15,9 @@ class VehicleFormFL extends Component {
 
   static propTypes = {
     vehicle: PropTypes.object.isRequired,
-    handleChange: PropTypes.func.isRequired
+    vehicleYears: PropTypes.array.isRequired,
+    vehicleMakes: PropTypes.array.isRequired,
+    handleChange: PropTypes.func.isRequired,
   };
 
   render() {
@@ -27,16 +29,24 @@ class VehicleFormFL extends Component {
         {stateInfo}
         <form>
           <Row>
-            <Col md={8} mdOffset={2}>
-              <Panel>
-                <Row>
-                  <Col md={7}>
-                    <VehicleInfo />
-                  </Col>
-                  <Col md={5}>
-                  </Col>
-                </Row>
-              </Panel>
+            <Col md={4}>
+              <VehicleInfo vehicleYears={this.props.vehicleYears}
+                           vehicleMakes={this.props.vehicleMakes} />
+            </Col>
+            <Col md={6} mdOffset={2}>
+              <Input type="text"
+                     label="Where is it garaged?"
+                     placeholder="Zip Code"
+                     help="Enter a valid FL zip code"
+                     required
+                />
+              <label>What is its primary use?</label>
+              <Input type="radio"
+                     label="Personal"
+                />
+              <Input type="radio"
+                     label="Business"
+                />
             </Col>
           </Row>
         </form>

@@ -47,16 +47,20 @@ class VehicleForm extends Component {
                    onChange={this.getVehicleMakes.bind(this)}
                    ref="year"
                    required>
+              <option value="" disabled selected>Select a year</option>
               {vehicleYearOptions}
             </Input>
             <Input type="select" placeholder="Select a make" required>
+              <option value="" disabled selected>Select a make</option>
               {vehicleMakeOptions}
             </Input>
             <Input type="select" placeholder="Select a model" required>
+              <option value="" disabled selected>Select a model</option>
               <option value="CLA-250">CLA-250</option>
               <option value="Sonata">Sonata</option>
             </Input>
             <Input type="select" placeholder="Select a year" required>
+              <option value="" disabled selected>Select a trim</option>
               <option value="4WD">4WD</option>
               <option value="2WD">2WD</option>
             </Input>

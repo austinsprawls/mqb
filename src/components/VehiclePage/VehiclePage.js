@@ -4,6 +4,7 @@
 import React, { PropTypes, Component } from 'react'
 import styles from './VehiclePage.css'
 import withStyles from '../../decorators/withStyles'
+import { Row, Col, Button } from 'react-bootstrap'
 import VehicleActions from '../../actions/VehicleActions'
 import VehicleStore from '../../stores/VehicleStore'
 import VehicleList from '../VehicleList'
@@ -61,6 +62,14 @@ class VehiclePage extends Component {
                        vehicleMakes={this.state.vehicleMakes}
                        handleChange={this.setVehicleState}
             />
+          <Row>
+            <Col md={8} mdOffset={2}>
+              <Button type="submit"
+                      bsStyle="warning"
+                      bsSize="large"
+                      className="pull-right">Continue</Button>
+            </Col>
+          </Row>
           <div dangerouslySetInnerHTML={{__html: this.props.content || ''}} />
         </div>
       </div>
