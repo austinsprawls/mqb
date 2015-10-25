@@ -40,20 +40,26 @@ class VehicleList extends Component {
         return (
           <div>
             <h3 className="pull-left">{vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model}</h3>
-            <i className="fa fa-times fa-2x pull-right" onClick={this.deleteVehicle.bind(this, vehicle)}></i>
+            <i className="fa fa-times fa-2x pull-right" onClick={this.deleteVehicle}></i>
           </div>
         );
       }
       return null;
     };
-    const addVehicleButton = (
-      <Button type="button" bsStyle="warning" onClick={this.addVehicle.bind(this, vehicle._quoteID)}>Add Another Vehicle</Button>
-    );
+    const addVehicleButton = (vehicle, index) => {
+      if (index===this.props.vehicles.length-1) {
+        return (
+          <Button type="button" bsStyle="warning" onClick={this.addVehicle.bind(this, vehicle._quoteID)}>Add Another Vehicle</Button>
+        );
+      } else {
+        return null;
+      }
+    };
     const vehicleForms = this.props.vehicles.map((vehicle, index) => {
       return (
         <Row>
           <Col md={8} mdOffset={2}>
-            <Panel header={displayVehicleHeader(vehicle)} footer={index===this.props.vehicles.length-1 ? addVehicleButton : null}>
+            <Panel header={displayVehicleHeader(vehicle)} footer={ addVehicleButton(vehicle, index) }>
               {districtForm({vehicle: vehicle,
                   key: vehicle._id,
                   vehicleYears: this.props.vehicleYears,
