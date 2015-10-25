@@ -36,7 +36,9 @@ class VehicleList extends Component {
   render() {
     const districtForm = DistrictForms[this.props.district];
     const displayVehicleHeader = (vehicle) => {
+      console.log(" the vehicle inside displayVehicleHeader ", vehicle);
       if (vehicle.year && vehicle.make && vehicle.model && vehicle.trim) {
+        console.log("The vehicle has a year: ", vehicle);
         return (
           <div>
             <h3 className="pull-left">{vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model}</h3>
@@ -47,15 +49,17 @@ class VehicleList extends Component {
       return null;
     };
     const addVehicleButton = (vehicle, index) => {
+      console.log("The index of this vehicle ", index);
+      console.log(" the vehicle inside addVehicleButton ", vehicle);
       if (index===this.props.vehicles.length-1) {
         return (
           <Button type="button" bsStyle="warning" onClick={this.addVehicle.bind(this, vehicle._quoteID)}>Add Another Vehicle</Button>
         );
-      } else {
         return null;
       }
     };
     const vehicleForms = this.props.vehicles.map((vehicle, index) => {
+      console.log("the vehicle: ", vehicle);
       return (
         <Row>
           <Col md={8} mdOffset={2}>

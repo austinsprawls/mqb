@@ -61,6 +61,7 @@ Dispatcher.register(function(action) {
       VehicleStore.emitChange();
       break;
     case ActionTypes.CREATE_VEHICLE:
+      console.log("CREATE_VEHICLE action triggered, pushing new vehicle to store: ", action.vehicle);
       _vehicles.push(action.vehicle);
       VehicleStore.emitChange();
       break;

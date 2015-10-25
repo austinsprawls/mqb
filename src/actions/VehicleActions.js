@@ -11,6 +11,7 @@ import restUtil from '../utils/restUtil.js';
 var VehicleActions = {
   createVehicle: function(vehicle) {
     restUtil.vehicle.create(vehicle).then(function(newVehicle) {
+      console.log("created a new vehicle from restUtil:", newVehicle);
       Dispatcher.dispatch({
         actionType: ActionTypes.CREATE_VEHICLE,
         vehicle: newVehicle
