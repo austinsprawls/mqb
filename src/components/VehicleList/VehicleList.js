@@ -3,10 +3,6 @@
  */
 
 import React, { PropTypes, Component } from 'react'
-// Might have to rethink how this gets required perhaps with an adaptation of the react-proxy-loader
-// Or to directly pull the component from the backend as a slug?
-// http://stackoverflow.com/questions/26518629/dynamically-rendering-a-react-component
-// https://github.com/webpack/react-proxy-loader
 import {Button, Row, Col, Panel} from 'react-bootstrap'
 import DistrictForms from '../../constants/DistrictForms'
 import VehicleActions from '../../actions/VehicleActions'
@@ -30,19 +26,28 @@ class VehicleList extends Component {
   addVehicle(event) {
     console.log("CREATE_VEHICLE action called: ", event);
     event.preventDefault();
-    VehicleActions.createVehicle();
+    var quoteID = this.props.vehicles[this.props.vehicles.length-1]._quoteID;
+    VehicleActions.createVehicle({_quoteID: quoteID});
   };
 
   render() {
     const districtForm = DistrictForms[this.props.district];
+    const displayVehicleHeader = (vehicle) => {
+      if (vehicle.year && vehicle.make && vehicle.model && vehicle.trim) {
+        return (
+          <h3>{vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model}</h3>
+        );
+      }
+      return null;
+    };
     const addVehicleButton = (
       <Button type="button" bsStyle="warning" onClick={this.addVehicle}>Add Another Vehicle</Button>
     );
-    const vehicleForms = this.props.vehicles.map(vehicle => {
+    const vehicleForms = this.props.vehicles.map((vehicle, index) => {
       return (
         <Row>
           <Col md={8} mdOffset={2}>
-            <Panel footer={addVehicleButton}>
+            <Panel header={displayVehicleHeader(vehicle)} footer={index===this.props.vehicles.length-1 ? addVehicleButton : null}>
               {districtForm({vehicle: vehicle,
                   key: vehicle._id,
                   vehicleYears: this.props.vehicleYears,

@@ -16,7 +16,7 @@ function restUtil(){
       headers:{
         "Accept": "application/json"
       }
-    }
+    };
     return new Promise((resolve, reject) => {
       request(options.method, options.url)
         .set(options.headers)
@@ -54,7 +54,7 @@ function restUtil(){
         return get(buildURL(url))
 
       }
-    }
+    },
   };
 
 }
