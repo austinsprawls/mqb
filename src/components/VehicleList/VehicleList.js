@@ -61,7 +61,7 @@ class VehicleList extends Component {
     const vehicleForms = this.props.vehicles.map((vehicle, index) => {
       console.log("the vehicle: ", vehicle);
       return (
-        <Row>
+        <Row key={vehicle._id}>
           <Col md={8} mdOffset={2}>
             <Panel header={displayVehicleHeader(vehicle)} footer={ addVehicleButton(vehicle, index) }>
               {districtForm({vehicle: vehicle,

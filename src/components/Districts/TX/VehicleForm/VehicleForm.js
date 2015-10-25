@@ -26,7 +26,7 @@ class VehicleFormTX extends Component {
     console.log("hi i'm here in the VehicleForm component: ", this.props.vehicle);
 
     return (
-      <div className="VehicleForm">
+      <div className="VehicleForm" key={this.props.vehicle._id}>
         {stateInfo}
         <form>
           <Row>
