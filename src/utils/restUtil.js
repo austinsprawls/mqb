@@ -5,18 +5,26 @@ const API_URL = "/api/quotes/";
 module.exports = restUtil();
 
 function restUtil(){
+  function handleError(err){
+    console.log('ERROR:', err)
+  }
 
   function get(url){
-    //TODO figure out how to use request
-    //return request.get(url);
     var options = {
       url: url,
-      method: "POST",
-      dataType:"json",
-      success: success,
-      error: error
-    };
-    return $.ajax(options);
+      method: "GET",
+      headers:{
+        "Accept": "application/json"
+      }
+    }
+    return new Promise((resolve, reject) => {
+      request(options.method, options.url)
+        .set(options.headers)
+        .end((err, response) => {
+          if (err) reject(err);
+          resolve(response)
+        });
+    });
   }
 
   function buildURL(url){
@@ -41,6 +49,10 @@ function restUtil(){
             //return get(url)
           }
         )
+      },
+      get: (url) => {
+        return get(buildURL(url))
+
       }
     }
   };

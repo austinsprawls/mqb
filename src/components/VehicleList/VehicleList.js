@@ -20,21 +20,23 @@ class VehicleList extends Component {
   static propTypes = {
     vehicles: PropTypes.array.isRequired,
     district: PropTypes.string.isRequired,
-    handleChange: PropTypes.func.isRequired
+    vehicleYears: PropTypes.array.isRequired,
+    vehicleMakes: PropTypes.array.isRequired,
+    handleChange: PropTypes.func.isRequired,
   };
 
   deleteVehicle(event) {};
 
   addVehicle(event) {
     console.log("CREATE_VEHICLE action called: ", event);
-    //event.preventDefault();
-    //VehicleActions.createVehicle();
+    event.preventDefault();
+    VehicleActions.createVehicle();
   };
 
   render() {
     const districtForm = DistrictForms[this.props.district];
     const addVehicleButton = (
-      <Button type="button" bsStyle="warning" onClick={console.log("thanks for clicking")}>Add Another Vehicle</Button>
+      <Button type="button" bsStyle="warning" onClick={this.addVehicle}>Add Another Vehicle</Button>
     );
     const vehicleForms = this.props.vehicles.map(vehicle => {
       return (
@@ -43,6 +45,8 @@ class VehicleList extends Component {
             <Panel footer={addVehicleButton}>
               {districtForm({vehicle: vehicle,
                   key: vehicle._id,
+                  vehicleYears: this.props.vehicleYears,
+                  vehicleMakes: this.props.vehicleMakes,
                   handleChange: this.props.handleChange,
                 }
               )}

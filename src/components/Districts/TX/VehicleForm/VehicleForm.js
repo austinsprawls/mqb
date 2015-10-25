@@ -16,6 +16,8 @@ class VehicleFormTX extends Component {
 
   static propTypes = {
     vehicle: PropTypes.object.isRequired,
+    vehicleYears: PropTypes.array.isRequired,
+    vehicleMakes: PropTypes.array.isRequired,
     handleChange: PropTypes.func.isRequired,
   };
 
@@ -29,7 +31,8 @@ class VehicleFormTX extends Component {
         <form>
           <Row>
             <Col md={4}>
-              <VehicleInfo />
+              <VehicleInfo vehicleYears={this.props.vehicleYears}
+                            vehicleMakes={this.props.vehicleMakes}/>
             </Col>
             <Col md={6} mdOffset={2}>
               <GarageInfo />

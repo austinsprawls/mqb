@@ -8,6 +8,7 @@ import { addEventListener, removeEventListener } from './utils/DOMUtils';
 import InitializeActions from './actions/InitializeActions'
 
 InitializeActions.initApp();
+InitializeActions.getVehicleYears();
 
 let cssContainer = document.getElementById('css');
 const appContainer = document.getElementById('app');
