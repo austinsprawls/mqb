@@ -4,7 +4,7 @@
 import React, { PropTypes, Component } from 'react'
 import styles from './AdditionalDriver.css'
 import withStyles from '../../../decorators/withStyles'
-import {  Row, Col, Input, Panel, Button } from 'react-bootstrap'
+import {  Row, Col, Input, Panel, Button, Glyphicon } from 'react-bootstrap'
 import DriversStore from '../../../stores/DriversStore'
 
 import DriversNameInput from '../FormParts/DriversNameInput'
@@ -30,7 +30,15 @@ class AdditionalDriver extends Component {
     const middleName = this.props.additionalDriver.middleName || 'Middle'
     const lastName = this.props.additionalDriver.lastName || 'Last'
     const suffixName = this.props.additionalDriver.suffixName || 'Suffix'
-    const driverName = [firstName, middleName, lastName, suffixName !== 'Suffix' ? suffixName : ''].join(' ')
+    const driverName = ()=>{
+      var fullName = [firstName, middleName, lastName, suffixName !== 'Suffix' ? suffixName : ''].join(' ')
+      return (
+        <span>
+          {fullName}
+          <Glyphicon glyph="remove" onClick={()=>alert('remove me')} className="pull-right" />
+        </span>
+      )
+    }
     const goPanel = () => {
       console.log(this.props)
       this.props.updatePanel(this.props.panelId)
@@ -41,7 +49,7 @@ class AdditionalDriver extends Component {
           <Col md={12}>
             <Panel
               onClick={goPanel}
-              header={driverName}
+              header={driverName()}
               collapsible
               expanded={this.props.panel === this.props.panelId}>
               <Row>

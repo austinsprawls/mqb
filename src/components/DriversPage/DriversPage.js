@@ -10,7 +10,7 @@ import DriversActions from '../../actions/DriversActions'
 import DriversStore from '../../stores/DriversStore'
 import PrimaryDriver from './PrimaryDriver'
 import AdditionalDrivers from './AdditionalDrivers'
-import {  Row, Col, Input, Panel, Button } from 'react-bootstrap'
+import {  Row, Col, Input, Panel, Button, Glyphicon } from 'react-bootstrap'
 
 @withStyles(styles)
 class DriversPage extends Component {
@@ -100,13 +100,19 @@ class DriversPage extends Component {
     return (
       <div className="DriversPage">
         <h3>Drivers Page</h3>
-        <Col md={12}>
-          <Button onClick={ ()=> this.setState({ panel: this.state.panel === 0 ? -1 : 0, primaryDriver: this.state.primaryDriver})}>
-          </Button>
-        </Col>
         <div className="DriversPage-container container">
           <Row>
-            <h3>Primary driver</h3>
+            <Col md={6}>
+                <h3>
+                  <label>Primary driver</label>
+                  <span>
+                    <Button onClick={ ()=> this.setState({ panel: this.state.panel === 0 ? -1 : 0, primaryDriver: this.state.primaryDriver})}>
+                      <Glyphicon glyph={this.state.panel === 0 ? "chevron-up" : "chevron-down"} />
+                    </Button>
+                  </span>
+                </h3>
+            </Col>
+
           </Row>
           <PrimaryDriver
             primaryDriver={this.state.drivers.primaryDriver}

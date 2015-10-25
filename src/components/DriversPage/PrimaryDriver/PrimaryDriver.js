@@ -36,7 +36,13 @@ class PrimaryDriver extends Component {
     const middleName = this.props.primaryDriver.middleName || 'Middle'
     const lastName = this.props.primaryDriver.lastName || 'Last'
     const suffixName = this.props.primaryDriver.suffixName || 'Suffix'
-    const driverName = [firstName, middleName, lastName, suffixName !== 'Suffix' ? suffixName : ''].join(' ')
+
+    const driverName = [
+      firstName,
+      middleName,
+      lastName,
+      suffixName !== 'Suffix' ? suffixName : '',
+    ].join(' ')
 
     return (
       <div className="primaryDriver">
