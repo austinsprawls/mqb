@@ -18,7 +18,7 @@ function vehicleModule(){
         router: router,
         isReq: true,
         relationship: 'many'
-    };``
+    };
 
     /*Start local variables for vehicleModule*/
     /*End local variables for vehicleModule*/
