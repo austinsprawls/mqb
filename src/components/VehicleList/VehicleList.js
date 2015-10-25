@@ -21,13 +21,13 @@ class VehicleList extends Component {
     handleChange: PropTypes.func.isRequired,
   };
 
-  deleteVehicle(event, vehicle) {
+  deleteVehicle(vehicle, event) {
     console.log("DELETE_VEHICLE action called: ", event);
     event.preventDefault();
     VehicleActions.deleteVehicle(vehicle);
   };
 
-  addVehicle(event, _quoteID) {
+  addVehicle(_quoteID, event) {
     console.log("CREATE_VEHICLE action called: ", event);
     event.preventDefault();
     VehicleActions.createVehicle({_quoteID: _quoteID});
