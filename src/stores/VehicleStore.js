@@ -12,7 +12,7 @@ var _vehicles = [],
     _vehicleYears = [],
     _vehicleMakes = [],
     _vehicleModels = [],
-    _vehicleTrims = [];
+    _vehicleTrims = {};
 
 
 var VehicleStore = Object.assign({}, EventEmitter.prototype, {
@@ -42,6 +42,10 @@ var VehicleStore = Object.assign({}, EventEmitter.prototype, {
 
   getVehicleModels: function() {
     return _vehicleModels;
+  },
+
+  getVehicleTrims: function() {
+    return _vehicleTrims;
   }
 
 });
@@ -58,6 +62,14 @@ Dispatcher.register(function(action) {
       break;
     case ActionTypes.GET_VEHICLE_MAKES:
       _vehicleMakes = action.makes;
+      VehicleStore.emitChange();
+      break;
+    case ActionTypes.GET_VEHICLE_MODELS:
+      _vehicleModels = action.models;
+      VehicleStore.emitChange();
+      break;
+    case ActionTypes.GET_VEHICLE_TRIMS:
+      _vehicleTrims = action.trims;
       VehicleStore.emitChange();
       break;
     case ActionTypes.CREATE_VEHICLE:

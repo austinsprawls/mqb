@@ -18,7 +18,9 @@ class VehicleList extends Component {
     district: PropTypes.string.isRequired,
     vehicleYears: PropTypes.array.isRequired,
     vehicleMakes: PropTypes.array.isRequired,
-    handleChange: PropTypes.func.isRequired,
+    vehicleModels: PropTypes.array.isRequired,
+    vehicleTrims: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
   };
 
   deleteVehicle(vehicle, event) {
@@ -61,14 +63,16 @@ class VehicleList extends Component {
     const vehicleForms = this.props.vehicles.map((vehicle, index) => {
       console.log("the vehicle: ", vehicle);
       return (
-        <Row>
+        <Row key={vehicle._id}>
           <Col md={8} mdOffset={2}>
             <Panel header={displayVehicleHeader(vehicle)} footer={ addVehicleButton(vehicle, index) }>
               {districtForm({vehicle: vehicle,
                   key: vehicle._id,
                   vehicleYears: this.props.vehicleYears,
                   vehicleMakes: this.props.vehicleMakes,
-                  handleChange: this.props.handleChange,
+                  vehicleModels: this.props.vehicleModels,
+                  vehicleTrims: this.props.vehicleTrims,
+                  onChange: this.props.onChange,
                 }
               )}
             </Panel>

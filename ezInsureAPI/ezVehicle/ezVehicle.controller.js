@@ -84,6 +84,7 @@ function ezVehicleCtrl(){
    *  500 - An error occurred when calling EZInsure
    */
   function getTrimsByYearMakeModel(req, res){
+    console.log('req: ', req);
     //Translate makes name into four letter code for EZInsure eg. Acura -> ACUR
     var make = vehicleUtil.translateMakeNameToCode(req.params.make);
     var path = 'vehicles/v1/trims/' + req.params.year + '/' + make + '/' + req.params.model;
@@ -118,6 +119,7 @@ function ezVehicleCtrl(){
       var whatToGet = path.split('/')[2];
       if(whatToGet === 'makes') response = vehicleUtil.translateMakeCodeArrToNameArr(response);
       if(whatToGet === 'vin') response[0].make = vehicleUtil.translateMakeCodeToName(response[0].make);
+      console.log("-------------calling eZ", response );
       res.status(200).json(response);
     }
 

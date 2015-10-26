@@ -6,22 +6,36 @@ import VehicleActions from '../../../../actions/VehicleActions'
 import styles from './VehicleInfo.css'
 import { Row, Col, Input } from 'react-bootstrap'
 
-class VehicleForm extends Component {
+class VehicleInfo extends Component {
   constructor(){
     super();
-    console.log("VehicleForm constructor(): this",this)
+    console.log("VehicleInfo constructor(): this",this)
   }
 
   static propTypes = {
     vehicleYears: PropTypes.array.isRequired,
-    vehicleMakes: PropTypes.array.isRequired
+    vehicleMakes: PropTypes.array.isRequired,
+    vehicleModels: PropTypes.array.isRequired,
+    vehicleTrims: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired
   };
 
-  getVehicleMakes(){
-    console.log("the value of the selected year: ", this);
+  handleChange(change, vehicle, event) {
     var selectedYear = this.refs.year.getValue();
-    VehicleActions.getVehicleMakes(selectedYear);
-  };
+    var selectedMake = this.refs.make.getValue();
+    var selectedModel = this.refs.model.getValue();
+    this.props.onChange(vehicle._id, event);
+    if (change==='year') {
+      vehicle.make = vehicle.model = vehicle.trim = '';
+      VehicleActions.getVehicleMakes(selectedYear);
+    } else if (change==='make') {
+      vehicle.model = vehicle.trim = '';
+      VehicleActions.getVehicleModels(selectedYear, selectedMake);
+    } else if (change==='model') {
+      vehicle.trim = '';
+      VehicleActions.getVehicleTrims(selectedYear, selectedMake, selectedModel);
+    }
+   };
 
   render() {
 
@@ -37,6 +51,32 @@ class VehicleForm extends Component {
       );
     });
 
+    const vehicleModelOptions = this.props.vehicleModels.map(model => {
+      return (
+        <option value={model}>{model}</option>
+      );
+    });
+
+    const vehicleTrimOptions = () => {
+      let trimOptions = Object.keys(this.props.vehicleTrims);
+      trimOptions = trimOptions.map(trim => {
+        return (
+          <option value={trim}>{trim}</option>
+        );
+      });
+      return trimOptions;
+    };
+
+    console.log("when you call vehicleModelOptions: ", vehicleModelOptions);
+
+    console.log("when you call vehicleTrimOptions: ", vehicleTrimOptions());
+
+    //const vehicleTrimOptions = this.props.vehicleTrims.map(trim => {
+    //  return (
+    //    <option value={trim}>{trim}</option>
+    //  );
+    //});
+
     return (
       <div className="VehicleInfo">
         <Row>
@@ -44,25 +84,43 @@ class VehicleForm extends Component {
             <Input type="select"
                    label="Auto Information"
                    placeholder="Select a year"
-                   onChange={this.getVehicleMakes.bind(this)}
+                   onChange={this.handleChange.bind(this, 'year', this.props.vehicle)}
                    ref="year"
+                   name="year"
+                   value={this.props.vehicle.year || ''}
                    required>
-              <option value="" disabled selected>Select a year</option>
+              <option value="" disabled>Select a year</option>
               {vehicleYearOptions}
             </Input>
-            <Input type="select" placeholder="Select a make" required>
-              <option value="" disabled selected>Select a make</option>
+            <Input type="select"
+                   placeholder="Select a make"
+                   onChange={this.handleChange.bind(this, 'make', this.props.vehicle)}
+                   value={this.props.vehicle.make || ''}
+                   ref="make"
+                   name="make"
+                   required>
+              <option value="" disabled>Select a make</option>
               {vehicleMakeOptions}
             </Input>
-            <Input type="select" placeholder="Select a model" required>
-              <option value="" disabled selected>Select a model</option>
-              <option value="CLA-250">CLA-250</option>
-              <option value="Sonata">Sonata</option>
+            <Input type="select"
+                   placeholder="Select a model"
+                   onChange={this.handleChange.bind(this, 'model', this.props.vehicle)}
+                   ref="model"
+                   name="model"
+                   value={this.props.vehicle.model || ''}
+                   required>
+              <option value="" disabled>Select a model</option>
+              {vehicleModelOptions}
             </Input>
-            <Input type="select" placeholder="Select a year" required>
-              <option value="" disabled selected>Select a trim</option>
-              <option value="4WD">4WD</option>
-              <option value="2WD">2WD</option>
+            <Input type="select"
+                   placeholder="Select a trim"
+                   onChange={this.props.onChange.bind(this, this.props.vehicle._id) }
+                   ref="trim"
+                   name="trim"
+                   value={this.props.vehicle.trim || ''}
+                   required>
+              <option value="" disabled>Select a trim</option>
+              {vehicleTrimOptions()}
             </Input>
           </Col>
         </Row>
@@ -71,4 +129,4 @@ class VehicleForm extends Component {
   }
 }
 
-export default VehicleForm;
+export default VehicleInfo;

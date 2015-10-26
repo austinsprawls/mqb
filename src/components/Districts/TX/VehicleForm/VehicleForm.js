@@ -18,7 +18,9 @@ class VehicleFormTX extends Component {
     vehicle: PropTypes.object.isRequired,
     vehicleYears: PropTypes.array.isRequired,
     vehicleMakes: PropTypes.array.isRequired,
-    handleChange: PropTypes.func.isRequired,
+    vehicleModels: PropTypes.array.isRequired,
+    vehicleTrims: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
   };
 
   render() {
@@ -26,13 +28,18 @@ class VehicleFormTX extends Component {
     console.log("hi i'm here in the VehicleForm component: ", this.props.vehicle);
 
     return (
-      <div className="VehicleForm">
+      <div className="VehicleForm" key={this.props.vehicle._id}>
         {stateInfo}
         <form>
           <Row>
             <Col md={4}>
-              <VehicleInfo vehicleYears={this.props.vehicleYears}
-                            vehicleMakes={this.props.vehicleMakes}/>
+              <VehicleInfo vehicle={this.props.vehicle}
+                           vehicleYears={this.props.vehicleYears}
+                           vehicleMakes={this.props.vehicleMakes}
+                           vehicleModels={this.props.vehicleModels}
+                           vehicleTrims={this.props.vehicleTrims}
+                           onChange={this.props.onChange}
+                />
             </Col>
             <Col md={6} mdOffset={2}>
               <GarageInfo />
