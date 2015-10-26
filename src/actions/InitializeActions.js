@@ -9,18 +9,13 @@ import ezUtil from '../utils/ezUtil'
 var InitializeActions = {
   initApp: function() {
     console.log("Creating quote.");
-    const quoteID = setQuoteID();
-
-    function setQuoteID(){
-      var cookies = document.cookie;
-      return cookieParser(document.cookie, /clutch-cookie=/);
-    }
+    const quoteID = cookieParser(document.cookie, /clutch-cookie=/);
 
     function cookieParser(cookies, regex){
       var cookies = cookies,
-        cookieRegEx = regex,
+        regEx = regex,
         cookie = cookies.split('; ').filter( (cookie) => {
-          return cookie.match(cookieRegEx);
+          return cookie.match(regEx);
         })[0];
       return cookie ? cookie.split('=')[1] : '';
     }
