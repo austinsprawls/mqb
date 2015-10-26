@@ -16,9 +16,7 @@ class VehicleFormFL extends Component {
   static propTypes = {
     vehicle: PropTypes.object.isRequired,
     vehicleYears: PropTypes.array.isRequired,
-    vehicleMakes: PropTypes.array.isRequired,
-    vehicleModels: PropTypes.array.isRequired,
-    vehicleTrims: PropTypes.object.isRequired,
+    vehicleInfoOptions: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
   };
 
@@ -34,9 +32,7 @@ class VehicleFormFL extends Component {
             <Col md={4}>
               <VehicleInfo vehicle={this.props.vehicle}
                            vehicleYears={this.props.vehicleYears}
-                           vehicleMakes={this.props.vehicleMakes}
-                           vehicleModels={this.props.vehicleModels}
-                           vehicleTrims={this.props.vehicleTrims}
+                           vehicleInfoOptions={this.props.vehicleInfoOptions}
                            onChange={this.props.onChange}
                 />
             </Col>

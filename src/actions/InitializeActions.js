@@ -8,17 +8,45 @@ import ezUtil from '../utils/ezUtil'
 
 var InitializeActions = {
   initApp: function() {
-      console.log("Creating quote.");
+    console.log("Creating quote.");
 
-      restUtil.quote.create().then( function(data){
-        console.log("Quote created: ", data);
+    restUtil.quote.create().then( function(quote){
+      console.log("Quote created: ", quote);
+      const vehicles = quote.vehicles;
+      var vehicleInfoOptions = {};
+      var vehicleInfoPromises = vehicles.map( vehicle => {
+        return new Promise( (resolve, reject) => {
+          var promiseArr = [];
+          if (vehicle.trim) {
+            promiseArr = [
+              ezUtil.vehicle.getMakesByYear(vehicle.year),
+              ezUtil.vehicle.getModelsByYearMake(vehicle.year, vehicle.make),
+              ezUtil.vehicle.getTrimsByYearMakeModel(vehicle.year, vehicle.make, vehicle.model)
+            ];
+          }
+
+          Promise.all(promiseArr).then(results => {
+            vehicleInfoOptions[vehicle._id] = {makes: results[0], models: results[1], trims: results[2]};
+            resolve();
+          });
+        })
+      });
+
+      Promise.all(vehicleInfoPromises).then(result => {
+        console.log("the result of resolvedVehicleInfoPromise: ", vehicleInfoOptions);
         Dispatcher.dispatch({
           actionType: ActionTypes.INITIALIZE,
-          initialData: data
+          initialData: {
+            quote: quote,
+            vehicleInfoOptions: vehicleInfoOptions
+          }
         });
-      }, function(err){
-        console.log("Promise: ", err);
       });
+
+
+    }, function(err){
+      console.log("Promise: ", err);
+    });
   },
   getVehicleYears: function(){
     console.log('getting years');

@@ -14,9 +14,7 @@ class VehicleInfo extends Component {
 
   static propTypes = {
     vehicleYears: PropTypes.array.isRequired,
-    vehicleMakes: PropTypes.array.isRequired,
-    vehicleModels: PropTypes.array.isRequired,
-    vehicleTrims: PropTypes.object.isRequired,
+    vehicleInfoOptions: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired
   };
 
@@ -27,17 +25,19 @@ class VehicleInfo extends Component {
     this.props.onChange(vehicle._id, event);
     if (change==='year') {
       vehicle.make = vehicle.model = vehicle.trim = '';
-      VehicleActions.getVehicleMakes(selectedYear);
+      VehicleActions.getVehicleMakes(vehicle._id, selectedYear);
     } else if (change==='make') {
       vehicle.model = vehicle.trim = '';
-      VehicleActions.getVehicleModels(selectedYear, selectedMake);
+      VehicleActions.getVehicleModels(vehicle._id, selectedYear, selectedMake);
     } else if (change==='model') {
       vehicle.trim = '';
-      VehicleActions.getVehicleTrims(selectedYear, selectedMake, selectedModel);
+      VehicleActions.getVehicleTrims(vehicle._id, selectedYear, selectedMake, selectedModel);
     }
    };
 
   render() {
+
+    console.log("the value of vehicleInfoOptions inside vehicleInfo: ", this.props.vehicleInfoOptions);
 
     const vehicleYearOptions = this.props.vehicleYears.map(year => {
       return (
@@ -45,20 +45,21 @@ class VehicleInfo extends Component {
       );
     });
 
-    const vehicleMakeOptions = this.props.vehicleMakes.map(make => {
+    const vehicleMakeOptions = this.props.vehicleInfoOptions[this.props.vehicle._id].makes.map(make => {
       return (
         <option value={make}>{make}</option>
       );
     });
 
-    const vehicleModelOptions = this.props.vehicleModels.map(model => {
+    const vehicleModelOptions = this.props.vehicleInfoOptions[this.props.vehicle._id].models.map(model => {
       return (
         <option value={model}>{model}</option>
       );
     });
 
     const vehicleTrimOptions = () => {
-      let trimOptions = Object.keys(this.props.vehicleTrims);
+      console.log("the trimOptions: ", Object.keys(this.props.vehicleInfoOptions[this.props.vehicle._id].trims));
+      let trimOptions = Object.keys(this.props.vehicleInfoOptions[this.props.vehicle._id].trims);
       trimOptions = trimOptions.map(trim => {
         return (
           <option value={trim}>{trim}</option>

@@ -37,27 +37,36 @@ var VehicleActions = {
       });
     });
   },
-  getVehicleMakes: function(year) {
+  getVehicleMakes: function(vehicleID, year) {
     ezUtil.vehicle.getMakesByYear(year).then(function(makes){
       Dispatcher.dispatch({
         actionType: ActionTypes.GET_VEHICLE_MAKES,
-        makes: makes
+        data: {
+          vehicleID: vehicleID,
+          makes: makes
+        }
       });
     });
   },
-  getVehicleModels: function(year, make) {
+  getVehicleModels: function(vehicleID, year, make) {
     ezUtil.vehicle.getModelsByYearMake(year, make).then(function(models) {
       Dispatcher.dispatch({
         actionType: ActionTypes.GET_VEHICLE_MODELS,
-        models: models
+        data: {
+          vehicleID: vehicleID,
+          models: models
+        }
       })
     })
   },
-  getVehicleTrims: function(year, make, model) {
+  getVehicleTrims: function(vehicleID, year, make, model) {
     ezUtil.vehicle.getTrimsByYearMakeModel(year, make, model).then(function(trims) {
       Dispatcher.dispatch({
         actionType: ActionTypes.GET_VEHICLE_TRIMS,
-        trims: trims
+        data: {
+          vehicleID: vehicleID,
+          trims: trims
+        }
       })
     })
   },

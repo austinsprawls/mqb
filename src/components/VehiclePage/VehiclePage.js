@@ -16,10 +16,7 @@ class VehiclePage extends Component {
     super();
     this.state = { vehicles: VehicleStore.getAllVehicles(),
                     district: CoreStore.getDistrict(),
-                    vehicleYears: VehicleStore.getVehicleYears(),
-                    vehicleMakes: VehicleStore.getVehicleMakes(),
-                    vehicleModels: VehicleStore.getVehicleModels(),
-                    vehicleTrims: VehicleStore.getVehicleTrims()
+                    vehicleInfoOptions: VehicleStore.getAllVehicleInfoOptions()
     };
     this._onChange = this._onChange.bind(this);
     this.setVehicleState = this.setVehicleState.bind(this);
@@ -51,9 +48,7 @@ class VehiclePage extends Component {
     this.setState({ vehicles: VehicleStore.getAllVehicles(),
                     district: CoreStore.getDistrict(),
                     vehicleYears: VehicleStore.getVehicleYears(),
-                    vehicleMakes: VehicleStore.getVehicleMakes(),
-                    vehicleModels: VehicleStore.getVehicleModels(),
-                    vehicleTrims: VehicleStore.getVehicleTrims()
+                    vehicleInfoOptions: VehicleStore.getAllVehicleInfoOptions()
     });
   };
   render() {
@@ -67,9 +62,7 @@ class VehiclePage extends Component {
           <VehicleList vehicles={this.state.vehicles}
                        district={this.state.district}
                        vehicleYears={this.state.vehicleYears}
-                       vehicleMakes={this.state.vehicleMakes}
-                       vehicleModels={this.state.vehicleModels}
-                       vehicleTrims={this.state.vehicleTrims}
+                       vehicleInfoOptions={this.state.vehicleInfoOptions}
                        onChange={this.setVehicleState}
             />
           <Row>

@@ -33,7 +33,7 @@ var CoreStore = Object.assign({}, EventEmitter.prototype, {
 Dispatcher.register(function(action) {
   switch(action.actionType) {
     case ActionTypes.INITIALIZE:
-      _state = action.initialData.productState;
+      _state = action.initialData.quote.productState;
       CoreStore.emitChange();
       break;
     default:

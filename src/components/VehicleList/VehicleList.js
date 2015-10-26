@@ -17,9 +17,7 @@ class VehicleList extends Component {
     vehicles: PropTypes.array.isRequired,
     district: PropTypes.string.isRequired,
     vehicleYears: PropTypes.array.isRequired,
-    vehicleMakes: PropTypes.array.isRequired,
-    vehicleModels: PropTypes.array.isRequired,
-    vehicleTrims: PropTypes.object.isRequired,
+    vehicleInfoOptions: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
   };
 
@@ -69,12 +67,11 @@ class VehicleList extends Component {
         <Row key={vehicle._id}>
           <Col md={8} mdOffset={2}>
             <Panel header={displayVehicleHeader(vehicle)} footer={ addVehicleButton(vehicle, index) }>
-              {districtForm({vehicle: vehicle,
+              {districtForm({
+                  vehicle: vehicle,
                   key: vehicle._id,
                   vehicleYears: this.props.vehicleYears,
-                  vehicleMakes: this.props.vehicleMakes,
-                  vehicleModels: this.props.vehicleModels,
-                  vehicleTrims: this.props.vehicleTrims,
+                  vehicleInfoOptions: this.props.vehicleInfoOptions,
                   onChange: this.props.onChange,
                 }
               )}

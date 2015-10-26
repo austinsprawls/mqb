@@ -11,9 +11,7 @@ var CHANGE_EVENT = 'change';
 
 var _vehicles = [],
     _vehicleYears = [],
-    _vehicleMakes = [],
-    _vehicleModels = [],
-    _vehicleTrims = {};
+    _vehicleInfoOptions = {};
 
 
 var VehicleStore = Object.assign({}, EventEmitter.prototype, {
@@ -37,16 +35,8 @@ var VehicleStore = Object.assign({}, EventEmitter.prototype, {
     return _vehicleYears;
   },
 
-  getVehicleMakes: function() {
-    return _vehicleMakes;
-  },
-
-  getVehicleModels: function() {
-    return _vehicleModels;
-  },
-
-  getVehicleTrims: function() {
-    return _vehicleTrims;
+  getAllVehicleInfoOptions: function() {
+    return _vehicleInfoOptions;
   }
 
 });
@@ -54,7 +44,8 @@ var VehicleStore = Object.assign({}, EventEmitter.prototype, {
 Dispatcher.register(function(action) {
   switch(action.actionType) {
     case ActionTypes.INITIALIZE:
-      _vehicles = action.initialData.vehicles;
+      _vehicles = action.initialData.quote.vehicles;
+      _vehicleInfoOptions = action.initialData.vehicleInfoOptions;
       VehicleStore.emitChange();
       break;
     case ActionTypes.GET_VEHICLE_YEARS:
@@ -62,15 +53,15 @@ Dispatcher.register(function(action) {
       VehicleStore.emitChange();
       break;
     case ActionTypes.GET_VEHICLE_MAKES:
-      _vehicleMakes = action.makes;
+      _vehicleInfoOptions[action.data.vehicleID].makes = action.data.makes;
       VehicleStore.emitChange();
       break;
     case ActionTypes.GET_VEHICLE_MODELS:
-      _vehicleModels = action.models;
+      _vehicleInfoOptions[action.data.vehicleID].models = action.data.models;
       VehicleStore.emitChange();
       break;
     case ActionTypes.GET_VEHICLE_TRIMS:
-      _vehicleTrims = action.trims;
+      _vehicleInfoOptions[action.data.vehicleID].trims = action.data.trims;
       VehicleStore.emitChange();
       break;
     case ActionTypes.CREATE_VEHICLE:
