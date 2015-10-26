@@ -29,10 +29,11 @@ class VehicleList extends Component {
     VehicleActions.deleteVehicle(vehicle);
   };
 
-  addVehicle(_quoteID, event) {
+  saveAndAddVehicle(vehicleToSave, event) {
     console.log("CREATE_VEHICLE action called: ", event);
     event.preventDefault();
-    VehicleActions.createVehicle({_quoteID: _quoteID});
+    VehicleActions.updateVehicle(vehicleToSave);
+    VehicleActions.createVehicle({_quoteID: vehicleToSave._quoteID});
   };
 
   render() {
@@ -55,7 +56,7 @@ class VehicleList extends Component {
       console.log(" the vehicle inside addVehicleButton ", vehicle);
       if (index===this.props.vehicles.length-1) {
         return (
-          <Button type="button" bsStyle="warning" onClick={this.addVehicle.bind(this, vehicle._quoteID)}>Add Another Vehicle</Button>
+          <Button type="button" bsStyle="warning" onClick={this.saveAndAddVehicle.bind(this, vehicle)}>Add Another Vehicle</Button>
         );
         return null;
       }
