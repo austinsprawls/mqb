@@ -4,8 +4,8 @@
 
 import React, { PropTypes, Component } from 'react'
 import {Button, Row, Col, Panel} from 'react-bootstrap'
-import DistrictForms from '../../constants/DistrictForms'
-import VehicleActions from '../../actions/VehicleActions'
+import DistrictForms from '../../../constants/DistrictForms'
+import VehicleActions from '../../../actions/VehicleActions'
 
 
 class VehicleList extends Component {

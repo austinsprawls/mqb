@@ -99,6 +99,7 @@ class VehicleInfo extends Component {
                    value={this.props.vehicle.make || ''}
                    ref="make"
                    name="make"
+                   disabled={!vehicleMakeOptions.length}
                    required>
               <option value="" disabled>Select a make</option>
               {vehicleMakeOptions}
@@ -109,6 +110,7 @@ class VehicleInfo extends Component {
                    ref="model"
                    name="model"
                    value={this.props.vehicle.model || ''}
+                   disabled={!vehicleModelOptions.length}
                    required>
               <option value="" disabled>Select a model</option>
               {vehicleModelOptions}
@@ -119,6 +121,7 @@ class VehicleInfo extends Component {
                    ref="trim"
                    name="trim"
                    value={this.props.vehicle.trim || ''}
+                   disabled={!vehicleTrimOptions().length}
                    required>
               <option value="" disabled>Select a trim</option>
               {vehicleTrimOptions()}
