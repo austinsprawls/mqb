@@ -35,6 +35,7 @@ exports.index = function(req, res) {
  *   500 - An error occurred when calling EZInsure
  */
 exports.create = function(req, res) {
+  console.log("Creating Quote");
   //Create new quote, but does not save, to generate mongoose _id
   var quote = new Quote(req.body);
 
@@ -80,6 +81,7 @@ function createDefaultRelationships(quote){
 
 // Get a single quote
 exports.show = function(req, res) {
+  console.log("Getting Quote.");
   //console.log("FETCHING QUOTE: ", req.params.id);
   //performs a db query to return the quote given the provided id
   //handles and returns errors
