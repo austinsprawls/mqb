@@ -5,6 +5,7 @@
 
 import Dispatcher from '../core/Dispatcher';
 import ActionTypes from '../constants/ActionTypes';
+import _ from 'lodash'
 var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 

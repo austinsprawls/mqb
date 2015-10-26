@@ -22,10 +22,10 @@ var VehicleActions = {
   },
   updateVehicle: function(updatedVehicle) {
     restUtil.vehicle.update(updatedVehicle).then(function(updatedVehicle) {
+      console.log("updated the vehicle from restUtil:", updatedVehicle);
       Dispatcher.dispatch({
         actionType: ActionTypes.UPDATE_VEHICLE,
         vehicle: updatedVehicle
-
       });
     });
   },
