@@ -16,28 +16,26 @@ class VehicleInfo extends Component {
     vehicleYears: PropTypes.array.isRequired,
     vehicleMakes: PropTypes.array.isRequired,
     vehicleModels: PropTypes.array.isRequired,
-    vehicleTrims: PropTypes.array.isRequired,
+    vehicleTrims: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired
   };
 
-  handleVehicleYearChange(vehicleID, event) {
-    console.log("the event is: ", event);
+  handleChange(change, vehicle, event) {
     var selectedYear = this.refs.year.getValue();
-    this.props.onChange(vehicleID, event);
-    VehicleActions.getVehicleMakes(selectedYear);
-  };
-
-  handleVehicleMakeChange(vehicleID, event) {
     var selectedMake = this.refs.make.getValue();
-    VehicleActions.getVehicleModels(selectedMake);
-    this.props.onChange(vehicleID, event);
-  };
-
-  handleVehicleModelChange(vehicleID, event) {
     var selectedModel = this.refs.model.getValue();
-    VehicleActions.getVehicleTrims(selectedModel);
-    this.props.onChange(vehicleID, event)
-  }
+    this.props.onChange(vehicle._id, event);
+    if (change==='year') {
+      vehicle.make = vehicle.model = vehicle.trim = '';
+      VehicleActions.getVehicleMakes(selectedYear);
+    } else if (change==='make') {
+      vehicle.model = vehicle.trim = '';
+      VehicleActions.getVehicleModels(selectedYear, selectedMake);
+    } else if (change==='model') {
+      vehicle.trim = '';
+      VehicleActions.getVehicleTrims(selectedYear, selectedMake, selectedModel);
+    }
+   };
 
   render() {
 
@@ -59,11 +57,25 @@ class VehicleInfo extends Component {
       );
     });
 
-    const vehicleTrimOptions = this.props.vehicleTrims.map(trim => {
-      return (
-        <option value={trim}>{trim}</option>
-      );
-    });
+    const vehicleTrimOptions = () => {
+      let trimOptions = Object.keys(this.props.vehicleTrims);
+      trimOptions = trimOptions.map(trim => {
+        return (
+          <option value={trim}>{trim}</option>
+        );
+      });
+      return trimOptions;
+    };
+
+    console.log("when you call vehicleModelOptions: ", vehicleModelOptions);
+
+    console.log("when you call vehicleTrimOptions: ", vehicleTrimOptions());
+
+    //const vehicleTrimOptions = this.props.vehicleTrims.map(trim => {
+    //  return (
+    //    <option value={trim}>{trim}</option>
+    //  );
+    //});
 
     return (
       <div className="VehicleInfo">
@@ -72,7 +84,7 @@ class VehicleInfo extends Component {
             <Input type="select"
                    label="Auto Information"
                    placeholder="Select a year"
-                   onChange={this.handleVehicleYearChange.bind(this, this.props.vehicle._id)}
+                   onChange={this.handleChange.bind(this, 'year', this.props.vehicle)}
                    ref="year"
                    name="year"
                    value={this.props.vehicle.year || ''}
@@ -82,7 +94,7 @@ class VehicleInfo extends Component {
             </Input>
             <Input type="select"
                    placeholder="Select a make"
-                   onChange={this.handleVehicleMakeChange.bind(this, this.props.vehicle._id)}
+                   onChange={this.handleChange.bind(this, 'make', this.props.vehicle)}
                    value={this.props.vehicle.make || ''}
                    ref="make"
                    name="make"
@@ -92,7 +104,7 @@ class VehicleInfo extends Component {
             </Input>
             <Input type="select"
                    placeholder="Select a model"
-                   onChange={this.handleVehicleModelChange.bind(this, this.props.vehicle._id)}
+                   onChange={this.handleChange.bind(this, 'model', this.props.vehicle)}
                    ref="model"
                    name="model"
                    value={this.props.vehicle.model || ''}
@@ -108,7 +120,7 @@ class VehicleInfo extends Component {
                    value={this.props.vehicle.trim || ''}
                    required>
               <option value="" disabled>Select a trim</option>
-              {vehicleTrimOptions}
+              {vehicleTrimOptions()}
             </Input>
           </Col>
         </Row>

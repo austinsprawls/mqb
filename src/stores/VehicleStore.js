@@ -12,7 +12,7 @@ var _vehicles = [],
     _vehicleYears = [],
     _vehicleMakes = [],
     _vehicleModels = [],
-    _vehicleTrims = [];
+    _vehicleTrims = {};
 
 
 var VehicleStore = Object.assign({}, EventEmitter.prototype, {

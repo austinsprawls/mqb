@@ -66,7 +66,7 @@ function ezUtil(){
   }
 
   function getTrimsByYearMakeModel(year, make, model){
-    var url = buildURL("vehicles/v1/years" + year + "/" + make + "/" + model),
+    var url = buildURL("vehicles/v1/trims/" + year + "/" + make + "/" + model),
       options = {
         url: url,
         method: "GET",

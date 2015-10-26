@@ -5,8 +5,8 @@
 
 import Dispatcher from '../core/Dispatcher'
 import ActionTypes from '../constants/ActionTypes'
-//import mustangCrud from '../../mustangCrudAPI/quote'
-import restUtil from '../utils/restUtil.js';
+import restUtil from '../utils/restUtil.js'
+import ezUtil from '../utils/ezUtil.js'
 
 var VehicleActions = {
   createVehicle: function(vehicle) {
@@ -21,7 +21,7 @@ var VehicleActions = {
     });
   },
   updateVehicle: function(updatedVehicle) {
-    mustangCrud.vehicle.update().then(function(updatedVehicle) {
+    restUtil.vehicle.update().then(function(updatedVehicle) {
       Dispatcher.dispatch({
         actionType: ActionTypes.UPDATE_VEHICLE,
         vehicle: updatedVehicle
@@ -30,7 +30,7 @@ var VehicleActions = {
     });
   },
   deleteVehicle: function(id) {
-    mustangCrud.vehicle.delete().then(function(deletedVehicle) {
+    restUtil.vehicle.delete().then(function(deletedVehicle) {
       Dispatcher.dispatch({
         actionType: ActionTypes.DELETE_VEHICLE,
         _id: deletedVehicle._id
@@ -38,43 +38,30 @@ var VehicleActions = {
     });
   },
   getVehicleMakes: function(year) {
-    var vehicleMakes = {
-      '2016': ['Mercedes-Benz'],
-      '2015': ['Hyundai'],
-      '2014': ['Acura'],
-      '2013': ['Ford']
-    };
-    Dispatcher.dispatch({
-      actionType: ActionTypes.GET_VEHICLE_MAKES,
-      makes: vehicleMakes[year]
+    ezUtil.vehicle.getMakesByYear(year).then(function(makes){
+      Dispatcher.dispatch({
+        actionType: ActionTypes.GET_VEHICLE_MAKES,
+        makes: makes
+      });
     });
   },
-  getVehicleModels: function(make) {
-    var vehicleModels = {
-      'Mercedes-Benz': ['CLA-250'],
-      'Hyundai': ['Sonata'],
-      'Acura': ['TL'],
-      'Ford': ['Expedition']
-    };
-    Dispatcher.dispatch({
-      actionType: ActionTypes.GET_VEHICLE_MODELS,
-      models: vehicleModels[make]
-    });
+  getVehicleModels: function(year, make) {
+    ezUtil.vehicle.getModelsByYearMake(year, make).then(function(models) {
+      Dispatcher.dispatch({
+        actionType: ActionTypes.GET_VEHICLE_MODELS,
+        models: models
+      })
+    })
   },
-  getVehicleTrims: function(model) {
-    var vehicleModels = {
-      'CLA-250': ['2WD'],
-      'Sonata': ['4WD'],
-      'TL': ['6WD'],
-      'Expedition': ['8WD']
-    };
-    Dispatcher.dispatch({
-      actionType: ActionTypes.GET_VEHICLE_TRIMS,
-      trims: vehicleModels[model]
-    });
+  getVehicleTrims: function(year, make, model) {
+    ezUtil.vehicle.getTrimsByYearMakeModel(year, make, model).then(function(trims) {
+      Dispatcher.dispatch({
+        actionType: ActionTypes.GET_VEHICLE_TRIMS,
+        trims: trims
+      })
+    })
   },
   getVehicleGarageCounties: function() {}
 };
-
 
 export default VehicleActions;

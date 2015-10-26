@@ -34,6 +34,7 @@
      }
 
      function create(req, res) {
+       console.log("REQ: ", req.body, req);
          req.body = { _quoteID: req.params.quoteID };
          var createData = {
              childInfo: req.body,

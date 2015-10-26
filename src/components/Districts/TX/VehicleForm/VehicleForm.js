@@ -19,7 +19,7 @@ class VehicleFormTX extends Component {
     vehicleYears: PropTypes.array.isRequired,
     vehicleMakes: PropTypes.array.isRequired,
     vehicleModels: PropTypes.array.isRequired,
-    vehicleTrims: PropTypes.array.isRequired,
+    vehicleTrims: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
   };
 
