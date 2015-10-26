@@ -29,6 +29,7 @@ server.use(bodyParser.json());
 // -----------------------------------------------------------------------------
 server.use('/api/content', require('./api/content'));
 server.use('/api/quotes', require('../mustangCrudAPI/quote'));
+server.use('/ez/api', require('../ezInsureAPI/ezInsure.index').router);
 
 //
 // Register server-side rendering middleware
