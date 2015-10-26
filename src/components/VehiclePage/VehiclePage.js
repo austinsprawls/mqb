@@ -18,8 +18,11 @@ class VehiclePage extends Component {
                     district: CoreStore.getDistrict(),
                     vehicleYears: VehicleStore.getVehicleYears(),
                     vehicleMakes: VehicleStore.getVehicleMakes(),
+                    vehicleModels: VehicleStore.getVehicleModels(),
+                    vehicleTrims: VehicleStore.getVehicleTrims()
     };
     this._onChange = this._onChange.bind(this);
+    this.setVehicleState = this.setVehicleState.bind(this);
   }
 
   componentWillMount() {
@@ -32,13 +35,16 @@ class VehiclePage extends Component {
     CoreStore.removeChangeListener(this._onChange);
   };
 
-  setVehicleState(id, event) {
-    var field = event.target.name,
-        value = event.target.value;
+  setVehicleState(vehicleID, event) {
+    console.log("now setting the vehicle state on VehiclePage (id): ", vehicleID);
+    console.log("now setting the vehicle state on VehiclePage (event): ", event.target.name);
+    console.log("now setting the vehicle state on VehiclePage (this): ", this);
+    const field = event.target.name;
+    const value = event.target.value;
     this.state.vehicles.map(vehicle => {
-      if (vehicle._id===id) vehicle[field] = value;
+      if (vehicle._id===vehicleID) vehicle[field] = value;
     });
-    this.setState({vehicles: vehicles});
+    this.setState({vehicles: this.state.vehicles});
   }
 
   _onChange() {
@@ -46,6 +52,8 @@ class VehiclePage extends Component {
                     district: CoreStore.getDistrict(),
                     vehicleYears: VehicleStore.getVehicleYears(),
                     vehicleMakes: VehicleStore.getVehicleMakes(),
+                    vehicleModels: VehicleStore.getVehicleModels(),
+                    vehicleTrims: VehicleStore.getVehicleTrims()
     });
   };
   render() {
@@ -60,7 +68,9 @@ class VehiclePage extends Component {
                        district={this.state.district}
                        vehicleYears={this.state.vehicleYears}
                        vehicleMakes={this.state.vehicleMakes}
-                       handleChange={this.setVehicleState}
+                       vehicleModels={this.state.vehicleModels}
+                       vehicleTrims={this.state.vehicleTrims}
+                       onChange={this.setVehicleState}
             />
           <Row>
             <Col md={8} mdOffset={2}>

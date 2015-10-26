@@ -49,8 +49,30 @@ var VehicleActions = {
       makes: vehicleMakes[year]
     });
   },
-  getVehicleModels: function() {},
-  getVehicleTrims: function() {},
+  getVehicleModels: function(make) {
+    var vehicleModels = {
+      'Mercedes-Benz': ['CLA-250'],
+      'Hyundai': ['Sonata'],
+      'Acura': ['TL'],
+      'Ford': ['Expedition']
+    };
+    Dispatcher.dispatch({
+      actionType: ActionTypes.GET_VEHICLE_MODELS,
+      models: vehicleModels[make]
+    });
+  },
+  getVehicleTrims: function(model) {
+    var vehicleModels = {
+      'CLA-250': ['2WD'],
+      'Sonata': ['4WD'],
+      'TL': ['6WD'],
+      'Expedition': ['8WD']
+    };
+    Dispatcher.dispatch({
+      actionType: ActionTypes.GET_VEHICLE_TRIMS,
+      trims: vehicleModels[model]
+    });
+  },
   getVehicleGarageCounties: function() {}
 };
 

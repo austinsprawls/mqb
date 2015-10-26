@@ -18,7 +18,9 @@ class VehicleList extends Component {
     district: PropTypes.string.isRequired,
     vehicleYears: PropTypes.array.isRequired,
     vehicleMakes: PropTypes.array.isRequired,
-    handleChange: PropTypes.func.isRequired,
+    vehicleModels: PropTypes.array.isRequired,
+    vehicleTrims: PropTypes.array.isRequired,
+    onChange: PropTypes.func.isRequired,
   };
 
   deleteVehicle(vehicle, event) {
@@ -68,7 +70,9 @@ class VehicleList extends Component {
                   key: vehicle._id,
                   vehicleYears: this.props.vehicleYears,
                   vehicleMakes: this.props.vehicleMakes,
-                  handleChange: this.props.handleChange,
+                  vehicleModels: this.props.vehicleModels,
+                  vehicleTrims: this.props.vehicleTrims,
+                  onChange: this.props.onChange,
                 }
               )}
             </Panel>
