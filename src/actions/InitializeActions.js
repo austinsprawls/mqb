@@ -3,7 +3,9 @@
  */
 import Dispatcher from '../core/Dispatcher';
 import ActionTypes from '../constants/ActionTypes';
-import restUtil from '../utils/restUtil.js';
+import restUtil from '../utils/restUtil';
+import ezUtil from '../utils/ezUtil'
+
 var InitializeActions = {
   initApp: function() {
       console.log("Creating quote.");
@@ -18,12 +20,14 @@ var InitializeActions = {
         console.log("Promise: ", err);
       });
   },
-  getVehicleYears: function() {
-    console.log("Getting vehicle years");
-    Dispatcher.dispatch({
-      actionType: ActionTypes.GET_VEHICLE_YEARS,
-      years: ['2016', '2015', '2014', '2013']
-    });
+  getVehicleYears: function(){
+    console.log('getting years');
+    ezUtil.vehicle.getYears().then(function(years) {
+      Dispatcher.dispatch({
+        actionType: ActionTypes.GET_VEHICLE_YEARS,
+        years: years
+      })
+    })
   }
 };
 
