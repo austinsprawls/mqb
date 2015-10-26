@@ -3,12 +3,12 @@
  */
 import React, { PropTypes, Component } from 'react'
 import styles from './VehiclePage.css'
-import withStyles from '../../decorators/withStyles'
+import withStyles from '../../../decorators/withStyles'
 import { Row, Col, Button } from 'react-bootstrap'
-import VehicleActions from '../../actions/VehicleActions'
-import VehicleStore from '../../stores/VehicleStore'
+import VehicleActions from '../../../actions/VehicleActions'
+import VehicleStore from '../../../stores/VehicleStore'
 import VehicleList from '../VehicleList'
-import CoreStore from '../../stores/CoreStore'
+import CoreStore from '../../../stores/CoreStore'
 
 @withStyles(styles)
 class VehiclePage extends Component {
