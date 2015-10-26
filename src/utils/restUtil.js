@@ -1,22 +1,30 @@
 import request from 'superagent';
-import $ from 'jquery';
-//Import dispatcher
 const API_URL = "/api/quotes/";
 module.exports = restUtil();
 
 function restUtil(){
-  function callAPI(options){
-    var cases = {
 
-    }
-    if(options.json){
-
-    } else {
-
-    }
-
+  function buildURL(url){
+    if(url) return API_URL + url;
+    return API_URL;
   }
 
+  function handleResponse(resolve, reject){
+    return (err, response) => {
+      if(err) reject(err);
+      resolve(response.body);
+    }
+  }
+
+  function callAPI(options){
+    var promise = (resolve, reject) => {
+      request(options.method, options.url)
+        .set(options.headers)
+        .send(options.json)
+        .end(handleResponse(resolve,reject))
+    };
+    return new Promise(promise)
+  }
 
   function show(url){
     var options = {
@@ -26,14 +34,7 @@ function restUtil(){
         "Accept": "application/json"
       }
     };
-    return new Promise((resolve, reject) => {
-      request(options.method, options.url)
-        .set(options.headers)
-        .end((err, response) => {
-          if (err) reject(err);
-          resolve(response)
-        });
-    });
+    return callAPI(options);
   }
 
   function create(url, payload){
@@ -41,20 +42,11 @@ function restUtil(){
       url: url,
       method: "POST",
       headers:{
-        "Accept": "application/json"
+        "Content-Type": "application/json"
       },
       json: payload
     };
-
-    return new Promise((resolve, reject) => {
-      request(options.method, options.url)
-        .send(options.json)
-        .set(options.headers)
-        .end((err, response) => {
-          if (err) reject(err);
-          resolve(response.body)
-        });
-    });
+    return callAPI(options);
   }
 
   function update(url, payload){
@@ -66,25 +58,7 @@ function restUtil(){
       },
       json: payload
     };
-
-    return new Promise((resolve, reject) => {
-      request
-        .post(options.url)
-        .send(options.json)
-        .set(options.headers)
-        .end((err, response) => {
-          if (err) reject(err);
-          resolve(response)
-        });
-
-      //request(options.method, options.url)
-      //  .send(options.json)
-      //  .set(options.headers)
-      //  .end((err, response) => {
-      //    if (err) reject(err);
-      //    resolve(response)
-      //  });
-    });
+    return callAPI(options);
   }
 
   function destroy(url){
@@ -95,20 +69,7 @@ function restUtil(){
         "Accept": "application/json"
       }
     };
-
-    return new Promise((resolve, reject) => {
-      request(options.method, options.url)
-        .set(options.headers)
-        .end((err, response) => {
-          if (err) reject(err);
-          resolve(response)
-        });
-    });
-  }
-
-  function buildURL(url){
-    if(url) return API_URL + url;
-    return API_URL;
+    return callAPI(options);
   }
 
   return {

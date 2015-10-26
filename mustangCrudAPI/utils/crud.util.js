@@ -64,7 +64,7 @@ function crudUtil(){
     function handleResult(err, result){
       if(err) return handleError(res, err);
       if(!result) return res.send(404);
-      return res.json(200, result[parentKey]);
+      return res.status(200).json(result[parentKey]);
     }
   }
 
@@ -96,7 +96,7 @@ function crudUtil(){
     function handleFind(err, result){
       if(err) return handleError(res, err);
       if(!result) return res.json(404);
-      return res.json(200, result);
+      return res.status(200).json(result);
     }
   }
 
@@ -170,7 +170,7 @@ function crudUtil(){
           returnedChild = updateResult[parentKey];
         }
         console.log(returnedChild);
-        return res.json(201, creationResult);
+        return res.status(201).json(creationResult);
       }
     }
   }
@@ -206,7 +206,7 @@ function crudUtil(){
       parent.save(handleSave);
       function handleSave(err, savedParent){
         if(err) return handleError(res, err);
-        return res.json(201, savedParent);
+        return res.status(201).json(savedParent);
       }
     });
   }
@@ -269,7 +269,7 @@ function crudUtil(){
     function handleUpdate(err, updateResult){
       if(customCallback) return customCallback(err, updateResult);
       if(err) return handleError(res, err);
-      return res.json(200,updateResult);
+      return res.status(200).json(updateResult);
     }
   }
 
