@@ -3,6 +3,7 @@
 import 'babel-core/polyfill';
 import path from 'path';
 import express from 'express';
+import bodyParser from 'body-parser'
 import React from 'react';
 import mongoose from 'mongoose'
 import ReactDOM from 'react-dom/server';
@@ -21,17 +22,18 @@ mongoose.connect('mongodb://localhost/mqb2', {
 
 server.set('port', (process.env.PORT || 5000));
 server.use(express.static(path.join(__dirname, 'public')));
+server.use(bodyParser.json());
 
 //
 // Register API middleware
 // -----------------------------------------------------------------------------
 server.use('/api/content', require('./api/content'));
+server.use('/api/quotes', require('../mustangCrudAPI/quote'));
 
 //
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
 
-server.use('/api/quotes', require('../mustangCrudAPI/quote'));
 
 server.get('*', async (req, res, next) => {
   try {
