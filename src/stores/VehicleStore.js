@@ -66,13 +66,15 @@ Dispatcher.register(function(action) {
       break;
     case ActionTypes.CREATE_VEHICLE:
       console.log("CREATE_VEHICLE action triggered, pushing new vehicle to store: ", action.vehicle);
+      _vehicleInfoOptions[action.vehicle._id] = {makes: [], models: [], trims: []}
       _vehicles.push(action.vehicle);
       VehicleStore.emitChange();
       break;
     case ActionTypes.UPDATE_VEHICLE:
-      var existingVehicle = _.find(_vehicles, {_id: action.vehicle._id});
+      var existingVehicle = _.find(_vehicles, {_id: action.data.vehicle._id});
       var existingVehicleIndex = _.indexOf(_vehicles, existingVehicle);
-      _vehicles.splice(existingVehicleIndex, 1, action.vehicle);
+      _vehicleInfoOptions[existingVehicle._id] = action.data.vehicleInfoOptions;
+      _vehicles.splice(existingVehicleIndex, 1, action.data.vehicle);
       VehicleStore.emitChange();
       break;
     case ActionTypes.DELETE_VEHICLE:

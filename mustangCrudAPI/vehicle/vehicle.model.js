@@ -17,10 +17,10 @@ function vehicleModel(){
   var VehicleSchema = new Schema({
     //Start  EZInsure required fields
     vin: String,
-    year: {type: String, default: '2011'},
-    make: {type: String, default: 'Infiniti'},
-    model: {type: String, default: 'G25'},
-    trim: {type: String, default: 'G25'},
+    year: String,
+    make: String,
+    model:String,
+    trim: String,
     subModel: String,
     partialVin: String,
     vehDrivenMiles: Boolean, //TODO have EZ Insure correct key

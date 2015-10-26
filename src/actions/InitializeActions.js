@@ -26,7 +26,8 @@ var InitializeActions = {
           }
 
           Promise.all(promiseArr).then(results => {
-            vehicleInfoOptions[vehicle._id] = {makes: results[0], models: results[1], trims: results[2]};
+            vehicleInfoOptions[vehicle._id] = results.length ?
+            {makes: results[0], models: results[1], trims: results[2]} : {makes: [], models: [], trims: []};
             resolve();
           });
         })

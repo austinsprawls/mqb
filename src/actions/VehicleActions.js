@@ -23,9 +23,20 @@ var VehicleActions = {
   updateVehicle: function(updatedVehicle) {
     restUtil.vehicle.update(updatedVehicle).then(function(updatedVehicle) {
       console.log("updated the vehicle from restUtil:", updatedVehicle);
-      Dispatcher.dispatch({
-        actionType: ActionTypes.UPDATE_VEHICLE,
-        vehicle: updatedVehicle
+      const vehicleInfoPromises = [
+        ezUtil.vehicle.getMakesByYear(vehicle.year),
+        ezUtil.vehicle.getModelsByYearMake(vehicle.year, vehicle.make),
+        ezUtil.vehicle.getTrimsByYearMakeModel(vehicle.year, vehicle.make, vehicle.model)
+      ];
+      Promise.all(vehicleInfoPromises).then(results => {
+        const vehicleInfoOptions = {makes: results[0], models: results[1], trims: results[2]};
+        Dispatcher.dispatch({
+          actionType: ActionTypes.UPDATE_VEHICLE,
+          data: {
+            vehicle: updatedVehicle,
+            vehicleInfoOptions: vehicleInfoOptions
+          }
+        });
       });
     });
   },
