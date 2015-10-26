@@ -32,6 +32,7 @@ class VehicleList extends Component {
   saveAndAddVehicle(vehicleToSave, event) {
     console.log("CREATE_VEHICLE action called: ", event);
     event.preventDefault();
+    console.log("The vehicle to be saved: ", vehicleToSave);
     VehicleActions.updateVehicle(vehicleToSave);
     VehicleActions.createVehicle({_quoteID: vehicleToSave._quoteID});
   };

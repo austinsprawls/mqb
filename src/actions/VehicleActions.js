@@ -21,7 +21,7 @@ var VehicleActions = {
     });
   },
   updateVehicle: function(updatedVehicle) {
-    restUtil.vehicle.update().then(function(updatedVehicle) {
+    restUtil.vehicle.update(updatedVehicle).then(function(updatedVehicle) {
       Dispatcher.dispatch({
         actionType: ActionTypes.UPDATE_VEHICLE,
         vehicle: updatedVehicle
@@ -29,8 +29,8 @@ var VehicleActions = {
       });
     });
   },
-  deleteVehicle: function(id) {
-    restUtil.vehicle.delete().then(function(deletedVehicle) {
+  deleteVehicle: function(deletedVehicle) {
+    restUtil.vehicle.delete(deletedVehicle).then(function(deletedVehicle) {
       Dispatcher.dispatch({
         actionType: ActionTypes.DELETE_VEHICLE,
         _id: deletedVehicle._id
