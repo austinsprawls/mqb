@@ -41,7 +41,7 @@ Dispatcher.register(function(action) {
       break;
 
     // all drivers
-    case ActionTypes.GET_DRIVERS:
+    case ActionTypes.GET_ALL_DRIVERS:
       _primaryDriver = action.primaryDriver;
       _additionalDrivers = action.additionalDrivers;
       DriversStore.emitChange();

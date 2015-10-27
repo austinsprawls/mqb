@@ -79,6 +79,14 @@ router.get('/:quoteID/fq_payload/:id', function(req, res){
     })
 })
 
+// All drivers routes
+router.get('/:quoteID/drivers', function(req, res){
+  drivers = {
+    primaryDriver: {firstName: 'bobby', middleName: 'fisher'},
+    additionalDrivers: []
+  }
+  res.json(drivers)
+})
 //Primary driver routes
 //There is no index function because of the one to one relationship with quote
 //There is also no delete function since there should always be a primary driver

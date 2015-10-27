@@ -10,12 +10,12 @@ import restUtil from '../utils/restUtil.js'
 
 var DriversActions = {
     // all drivers
-    getDrivers: function(quoteId){
+    getAllDrivers: function(quoteId){
       restUtil.drivers
       .show(quoteId)
       .then(function(drivers) {
         Dispatcher.dispatch({
-            actionType: ActionTypes.GET_DRIVERS,
+            actionType: ActionTypes.GET_ALL_DRIVERS,
             primaryDriver: drivers.primaryDriver,
             additionalDrivers: drivers.additionalDrivers
           })
