@@ -82,15 +82,15 @@ router.get('/:quoteID/fq_payload/:id', function(req, res){
 //Primary driver routes
 //There is no index function because of the one to one relationship with quote
 //There is also no delete function since there should always be a primary driver
-router.get('/:quoteID/primary_drivers/:id', primaryDriverCtrl.show);
-router.post('/:quoteID/primary_drivers', primaryDriverCtrl.create);
-router.put('/:quoteID/primary_drivers/:id', primaryDriverCtrl.update);
+router.get('/:quoteID/drivers/primary', primaryDriverCtrl.show);
+router.post('/:quoteID/drivers/primary', primaryDriverCtrl.create);
+router.put('/:quoteID/drivers/primary', primaryDriverCtrl.update);
 
 //Additional driver routes
-router.get('/:quoteID/additional_drivers', additionalDriverCtrl.index);
-router.post('/:quoteID/additional_drivers', additionalDriverCtrl.create);
-router.put('/:quoteID/additional_drivers/:id', additionalDriverCtrl.update);
-router.delete('/:quoteID/additional_drivers/:id', additionalDriverCtrl.destroy);
+router.get('/:quoteID/drivers/additional', additionalDriverCtrl.index);
+router.post('/:quoteID/drivers/additional', additionalDriverCtrl.create);
+router.put('/:quoteID/drivers/additional/:id', additionalDriverCtrl.update);
+router.delete('/:quoteID/drivers/additional/:id', additionalDriverCtrl.destroy);
 
 //Vehicles routes
 router.get('/:quoteID/vehicles', vehicleCtrl.index);
