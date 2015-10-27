@@ -88,15 +88,14 @@ exports.show = function(req, res) {
   //returns quote in json format when no errors occur
   Quote.findById(req.params.id)
     .exec(function (err, quote) {
-    if(err) {
-      return handleError(res, err);
-    }
-    if(!quote) {
-      return res.send(404, "Quote not found.");
-    }
-    //console.log("Quote Fetched: ", quote);
-    return res.json(quote);
-  });
+      var populateStr = 'primaryDriver additionalDrivers vehicles rates finalRates underwriting payment transaction policy';
+      if(err) return handleError(res, err);
+
+      Quote.populate(quote, populateStr, function (err, quote) {
+        if(err) return handleError(res, err);
+        return res.status(201).json(quote);
+      })
+    })
 };
 
 
