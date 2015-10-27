@@ -98,9 +98,10 @@ function restUtil(){
       }
     },
     drivers: {
-      show: (id) => {
-        var url = buildUrl(drivers._quoteID + '/drivers/')
-        return show(url)
+      show: (quoteId) => {
+        var url = buildUrl(quoteId + '/drivers/')
+        var result = show(url)
+        return 
       }
     },
     primaryDriver: {
