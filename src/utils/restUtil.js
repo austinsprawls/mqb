@@ -96,7 +96,46 @@ function restUtil(){
         var url = buildURL( vehicle._quoteID + '/vehicles/' + vehicle._id);
         return destroy(url)
       }
-    }
+    },
+    drivers: {
+      show: (id) => {
+        var url = buildUrl(drivers._quoteID + '/drivers/')
+        return show(url)
+      }
+    },
+    primaryDriver: {
+      //index remove update
+      show: (quoteId) => {
+        var url = buildUrl(quoteId + '/drivers/primary/')
+        return show(url)
+      },
+      update: (driver) => {
+        var url = buildURL( driver._quoteID + '/drivers/primary/');
+        return update(url, driver)
+      },
+      // destroy: (driver) => {
+      //   var url = buildURL( driver._quoteID + '/drivers/primary/' + driver._id);
+      //   return destroy(url)
+      // },
+    },
+    additionalDrivers: {
+      //create index remove update
+      create: (quoteId) => {
+        var url = buildURL( quoteId + '/drivers/additional/');
+        return create(url)
+      },
+      show: (driverId) => {
+        var url = buildUrl(drivers._quoteID + '/drivers/additional/' + driver._id)
+        return show(url)
+      },
+      update: (driver) => {
+        var url = buildURL( driver._quoteID + '/drivers/additional/' + driver._id);
+        return update(url, driver)
+      },
+      destroy: (driver) => {
+        var url = buildURL( driver._quoteID + '/drivers/additional/' + driver._id);
+        return destroy(url)
+      },
+    },
   };
-
 }

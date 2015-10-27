@@ -3,9 +3,9 @@
  */
 import React, { PropTypes, Component } from 'react'
 import styles from './PrimaryDriver.css'
-import withStyles from '../../../decorators/withStyles'
+import withStyles from '../../../../decorators/withStyles'
 import {  Row, Col, Input, Panel, Button } from 'react-bootstrap'
-import DriversStore from '../../../stores/DriversStore'
+import DriversStore from '../../../../stores/DriversStore'
 
 import DriversNameInput from '../FormParts/DriversNameInput'
 import DriversContactInfoInput from '../FormParts/DriversContactInfoInput'

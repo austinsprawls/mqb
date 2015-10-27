@@ -9,7 +9,7 @@ var EventEmitter = require('events').EventEmitter;
 var CHANGE_EVENT = 'change';
 
 var _state = '';
-
+var _quoteId = '';
 
 var CoreStore = Object.assign({}, EventEmitter.prototype, {
   addChangeListener: function(callback) {
@@ -26,6 +26,10 @@ var CoreStore = Object.assign({}, EventEmitter.prototype, {
 
   getDistrict: function() {
     return _state;
+  },
+
+  getQuoteId: function(){
+    return _quoteId;
   }
 
 });
@@ -34,6 +38,7 @@ Dispatcher.register(function(action) {
   switch(action.actionType) {
     case ActionTypes.INITIALIZE:
       _state = action.initialData.quote.productState;
+      _quoteId = action.initialData.quote._id;
       CoreStore.emitChange();
       break;
     default:

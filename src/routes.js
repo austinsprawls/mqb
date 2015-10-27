@@ -10,8 +10,8 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import NotFoundPage from './components/NotFoundPage';
 import ErrorPage from './components/ErrorPage';
-import VehiclePage from './components/VehiclePage';
-import DriversPage from './components/DriversPage';
+import VehiclePage from './components/vehicles/VehiclePage';
+import DriversPage from './components/drivers/DriversPage';
 
 const router = new Router(on => {
   on('*', async (state, next) => {

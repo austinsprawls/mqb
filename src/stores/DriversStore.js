@@ -10,6 +10,7 @@ var CHANGE_EVENT = 'change';
 
 var _primaryDriver = {};
 var _additionalDrivers = [];
+var _additionalDriver = {};
 
 var DriversStore = Object.assign({}, EventEmitter.prototype, {
   addChangeListener: function(callback) {
@@ -32,18 +33,37 @@ var DriversStore = Object.assign({}, EventEmitter.prototype, {
 Dispatcher.register(function(action) {
   console.log('DriverStore: action', action)
   switch(action.actionType) {
+
     case ActionTypes.INITIALIZE:
-      _primaryDriver = action.initialData.primaryDriver;
-      _additionalDrivers = action.initialData.additionalDrivers;
+      _primaryDriver = action.initialData.quote.primaryDriver;
+      _additionalDrivers = action.initialData.quote.additionalDrivers;
       DriversStore.emitChange();
       break;
+
+    // all drivers
     case ActionTypes.GET_DRIVERS:
       _primaryDriver = action.primaryDriver;
       _additionalDrivers = action.additionalDrivers;
       DriversStore.emitChange();
       break;
+
+    // Primary Driver
+    case ActionTypes.GET_PRIMARY_DRIVER:
+      _primaryDriver = action.primaryDriver;
+      DriversStore.emitChange();
+      break;
+    case ActionTypes.UPDATE_PRIMARY_DRIVER:
+      _primaryDriver = action.primaryDriver;
+      DriversStore.emitChange();
+      break;
+
+    // Additional Driver
     case ActionTypes.CREATE_ADDITIONAL_DRIVER:
       _additionalDrivers.push(action.additionalDriver);
+      DriversStore.emitChange();
+      break;
+    case ActionTypes.GET_ADDITIONAL_DRIVER:
+      _additionalDriver = action.additionalDriver
       DriversStore.emitChange();
       break;
     case ActionTypes.UPDATE_ADDITIONAL_DRIVER:

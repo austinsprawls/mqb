@@ -3,9 +3,9 @@
  */
 import React, { PropTypes, Component } from 'react'
 import styles from './AdditionalDriver.css'
-import withStyles from '../../../decorators/withStyles'
+import withStyles from '../../../../decorators/withStyles'
 import {  Row, Col, Input, Panel, Button, Glyphicon } from 'react-bootstrap'
-import DriversStore from '../../../stores/DriversStore'
+import DriversStore from '../../../../stores/DriversStore'
 
 import DriversNameInput from '../FormParts/DriversNameInput'
 import DriversContactInfoInput from '../FormParts/DriversContactInfoInput'
